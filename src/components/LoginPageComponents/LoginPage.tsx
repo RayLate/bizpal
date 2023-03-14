@@ -1,19 +1,20 @@
 import { Box } from '@mui/material';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, Container } from '@mui/material';
 
 const LoginPage: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
-      <div>
+      <Container maxWidth='sm'>
         <Image
           src='/assets/login_bg.png'
           alt='bg'
           fill
           style={{ zIndex: -1 }}
         />
-        <Card sx={{ minWidth: 275 }}>
+        <Card>
+          <img src='/assets/bizpal-logo.png' alt='logo' width={533} />
           <CardContent>
             <Typography variant='h1' color='initial'>
               Login
@@ -21,7 +22,7 @@ const LoginPage: React.FC<PropsWithChildren> = ({ children }) => {
             {children}
           </CardContent>
         </Card>
-      </div>
+      </Container>
     </>
   );
 };
