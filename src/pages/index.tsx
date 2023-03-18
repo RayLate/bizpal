@@ -11,8 +11,6 @@ export default function Home() {
     <>
       <BizPalHead />
       <LoginPage>
-        <div>Hello World</div>
-        <div>{user ? user.email : 'Sign In'}</div>
         {user ? <GoogleLogoutButton /> : <GoogleLoginButton />}
       </LoginPage>
     </>

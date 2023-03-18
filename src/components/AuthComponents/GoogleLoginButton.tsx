@@ -15,7 +15,7 @@ export default function GoogleLoginButton() {
   }
 
   return (
-    <>
+    <div className='google-login'>
       <GoogleLogin
         onSuccess={(response) => {
           loginHandler(response);
@@ -23,7 +23,9 @@ export default function GoogleLoginButton() {
         onError={() => {
           console.log('Login Failed');
         }}
+        size='large'
+        auto_select={false}
       />
-    </>
+    </div>
   );
 }
