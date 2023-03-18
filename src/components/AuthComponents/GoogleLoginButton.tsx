@@ -1,31 +1,22 @@
-import { GoogleUser, useGoogleUser } from '@/context/AuthContext';
-import { GoogleLogin } from '@react-oauth/google';
-import jwt_decode from 'jwt-decode';
-
-export default function GoogleLoginButton() {
-  const { setUser } = useGoogleUser();
-
-  function loginHandler(response: any) {
-    // console.log(response);
-    const userObject: GoogleUser = jwt_decode(response.credential);
-    // console.log(userObject);
-    setUser(userObject);
-    localStorage.setItem('user', JSON.stringify(userObject));
-    console.log(userObject.name, 'Login!');
-  }
-
+import Button from '@mui/material/Button';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import GoogleIcon from '@mui/icons-material/Google';
+export default function GoogleLoginButton({ text }: { text: string }) {
   return (
-    <div className='google-login'>
-      <GoogleLogin
-        onSuccess={(response) => {
-          loginHandler(response);
-        }}
-        onError={() => {
-          console.log('Login Failed');
-        }}
+    <>
+      <Button
+        variant='contained'
+        color='primary'
         size='large'
-        auto_select={false}
-      />
-    </div>
+        onClick={(e) => {
+          e.preventDefault();
+          signIn('google', { callbackUrl: '/' });
+        }}
+        sx={{ color: 'white' }}
+        endIcon={<GoogleIcon />}
+      >
+        {text}
+      </Button>
+    </>
   );
 }

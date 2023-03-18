@@ -1,5 +1,3 @@
-import { Box } from '@mui/material';
-import Image from 'next/image';
 import { PropsWithChildren } from 'react';
 import {
   Card,

@@ -1,19 +1,21 @@
-import { useGoogleUser } from '@/context/AuthContext';
+import Button from '@mui/material/Button';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
-export default function GoogleLogoutButton() {
-  const { user, setUser } = useGoogleUser();
-  function logoutHandler() {
-    if (user) {
-      console.log(user.name, 'Logged out!');
-      setUser(null);
-      localStorage.removeItem('user');
-    }
-  }
+export default function GoogleLoginButton({ text }: { text: string }) {
+  const router = useRouter();
   return (
     <>
-      <button type='button' onClick={logoutHandler}>
-        Logout
-      </button>
+      <Button
+        variant='contained'
+        color='primary'
+        onClick={(e) => {
+          e.preventDefault();
+          signOut({ callbackUrl: '/' });
+        }}
+      >
+        {text}
+      </Button>
     </>
   );
 }
