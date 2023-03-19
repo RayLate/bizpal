@@ -12,3 +12,22 @@ html {
   justify-content: center;
   align-items: center;
 }
+.nav-pane {
+  width: 250px;
+  height: 100vh;
+  background-color: #333;
+  padding: 20px;
+}
+
+.nav-pane a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.nav-pane a:hover {
+  background-color: #555;
+}
