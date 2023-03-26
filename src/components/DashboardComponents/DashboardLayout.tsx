@@ -85,7 +85,11 @@ const DashboardLayout = ({ children }: DashboardProps) => {
         <Toolbar />
         <Box display={'flex'} sx={{ height: '100%', backgroundColor: 'white' }}>
           <Box sx={{ width: drawerWidth }} />
-          <Box mx={5} p={5} sx={{ height: '100%', width: '100%' }}>
+          <Box
+            mx={5}
+            p={5}
+            sx={{ height: '100%', width: '100%', overflow: 'auto' }}
+          >
             {children}
           </Box>
         </Box>

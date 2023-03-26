@@ -56,7 +56,7 @@ const CategoryHeader = ({
         <Typography variant='h4' color='initial' fontWeight={'bold'} mb={3}>
           Market Place
         </Typography>
-        <Grid container md={12} columnSpacing={5} rowSpacing={2}>
+        <Grid container columnSpacing={5} rowSpacing={2}>
           {categories.map((category) => {
             return (
               <Grid item key={category} md={3}>
