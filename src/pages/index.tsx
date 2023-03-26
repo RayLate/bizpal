@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { CssBaseline } from '@mui/material';
+import LoadingAnimation from '@/components/templates/LoadingPage';
 
 export default function Home() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function Home() {
   }, [status, session, router]);
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <LoadingAnimation />;
   }
 
   return (

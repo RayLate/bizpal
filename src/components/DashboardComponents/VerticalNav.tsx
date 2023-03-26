@@ -24,8 +24,8 @@ interface VerticalNavProps {
         image?: string | null | undefined;
       }
     | undefined;
+  drawerWidth: number;
 }
-const drawerWidth = 240;
 
 interface ListItemButtonNavProps {
   link: string;
@@ -43,7 +43,7 @@ const CustomListItemButton = styled(ListItemButton)<ListItemButtonProps>(
   })
 );
 
-const VerticalNav: React.FC<VerticalNavProps> = ({ user }) => {
+const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
   const router = useRouter();
   const topLinks = [
     { label: 'New Booking', href: '/marketplace' },

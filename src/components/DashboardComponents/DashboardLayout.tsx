@@ -12,7 +12,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
 import { signOut } from 'next-auth/react';
-import VerticalNav from './Nav';
+import VerticalNav from './VerticalNav';
+import LoadingAnimation from '../templates/LoadingPage';
 
 const SignOutButton = () => {
   return (
@@ -58,6 +59,8 @@ interface DashboardProps {
   children: ReactNode;
 }
 
+const drawerWidth = 240;
+
 const DashboardLayout = ({ children }: DashboardProps) => {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -69,16 +72,23 @@ const DashboardLayout = ({ children }: DashboardProps) => {
   }, [status, session, router]);
 
   if (status === 'loading' || !session) {
-    return <div>Loading...</div>;
+    return <LoadingAnimation />;
   }
 
   return (
     <>
-      <Box id='fullbodycontainer' sx={{ display: 'flex' }}>
+      <Box height='100vh' display='flex' flexDirection='column'>
         <CssBaseline />
+
         <TopNavBar />
-        <VerticalNav user={session.user} />
-        <div>{children}</div>
+        <VerticalNav user={session.user} drawerWidth={drawerWidth} />
+        <Toolbar />
+        <Box display={'flex'} sx={{ height: '100%', backgroundColor: 'white' }}>
+          <Box sx={{ width: drawerWidth }} />
+          <Box mx={5} p={5} sx={{ height: '100%', width: '100%' }}>
+            {children}
+          </Box>
+        </Box>
       </Box>
     </>
   );
