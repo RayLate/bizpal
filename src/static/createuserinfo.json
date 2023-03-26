@@ -1,0 +1,13 @@
+[
+  {
+    "M": {
+      "firstName": { "S": "test" },
+      "lastName": { "S": "user" },
+      "isSeller": { "N": "1" },
+      "interest": { "S": "food" },
+      "bookingCount": { "N": "3" },
+      "region": { "S": "Singapore" },
+      "email": { "S": "test@gmail.com" }
+    }
+  }
+]

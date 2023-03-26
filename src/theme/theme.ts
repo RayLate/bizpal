@@ -5,7 +5,7 @@ const theme = createTheme({
   palette: {
     primary: cyan,
     secondary: orange,
-  },
+  }
 });
 
 export default theme;

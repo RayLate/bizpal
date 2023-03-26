@@ -1,0 +1,14 @@
+[
+  {
+    "M": {
+      "bookingCreateTime": { "S": "2023-03-21 23:31:33.150094" },
+      "bookingMerchant": { "S": "testBiz" },
+      "bookingStatus": { "S": "BOOKED" },
+      "bookingDate": { "S": "2023-03-21" },
+      "bookingItem": { "S": "testItem" },
+      "bookingId": { "S": "351f66a6-ed8d-45ce-a2c8-309650fccd41" },
+      "bookingUpdateTime": { "S": "2023-03-21 23:31:33.150100" },
+      "bookingAmount": { "N": "10" }
+    }
+  }
+]
