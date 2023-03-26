@@ -8,10 +8,14 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const [text, setText] = useState('Sign in with google');
   const router = useRouter();
-  const { data, status } = useSession();
-  if (status === 'authenticated' && data.user) {
-    console.log(data);
+  const { data: session, status } = useSession();
+  if (status === 'authenticated' && session.user) {
+    console.log(session);
     router.push('/marketplace');
+  }
+
+  if (status === 'loading' || !session) {
+    return <div>Loading...</div>;
   }
 
   return (
