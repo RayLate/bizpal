@@ -1,4 +1,4 @@
-import { Item } from './data';
+import { Item } from '../../static/dummyItems';
 import {
   Grid,
   Card,
@@ -55,7 +55,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
             onLoad={handleImageLoad}
             onError={handleImageError}
             alt='random image'
-            image={`https://source.unsplash.com/random/300x150/?${item.category.toLowerCase()}`}
+            image={`https://source.unsplash.com/random/300x150/?${item.cate.toLowerCase()}`}
           />
           {isLoading && (
             <Skeleton
@@ -79,7 +79,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
                 fontWeight={'bold'}
                 noWrap={true}
               >
-                {item.serviceName}
+                {item.itemName}
               </Typography>
               <Box
                 sx={{
@@ -89,7 +89,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
               >
                 <StarIcon sx={{ fontSize: 16, color: 'gold' }} />
                 <Typography variant='overline' color='initial' pl={1}>
-                  {item.rating}
+                  {item.itemRate}
                 </Typography>
               </Box>
             </Stack>
@@ -102,7 +102,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
             >
               <SmallAvatar src={''} />
               <Typography variant='body2' color='text.secondary'>
-                {item.providerName}
+                {item.bizId}
               </Typography>
             </Stack>
             <Typography variant='caption' color='grey'>

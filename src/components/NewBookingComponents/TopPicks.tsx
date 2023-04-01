@@ -1,4 +1,4 @@
-import { Item } from './data';
+import { Item } from '../../static/dummyItems';
 import { Box } from '@mui/material';
 import ItemCard from './ItemCard';
 

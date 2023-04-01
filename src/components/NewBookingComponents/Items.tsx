@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { Item } from './data';
+import { Item } from '../../static/dummyItems';
 import { Grid, Typography } from '@mui/material';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import TopPicks from './TopPicks';
@@ -13,11 +13,11 @@ const Items = ({
   selectedCategory: string;
 }) => {
   const topPicks = items
-    .filter((a) => a.category === selectedCategory)
-    .sort((a, b) => b.rating - a.rating)
+    .filter((a) => a.cate === selectedCategory)
+    .sort((a, b) => b.itemRate - a.itemRate)
     .slice(0, 10);
 
-  const allItems = items.filter((a) => a.category === selectedCategory);
+  const allItems = items.filter((a) => a.cate === selectedCategory);
 
   return (
     <>

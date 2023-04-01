@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { Item } from './data';
+import { Item } from '../../static/dummyItems';
 import ItemCard from './ItemCard';
 
 const AllPicks = ({ items }: { items: Item[] }) => {

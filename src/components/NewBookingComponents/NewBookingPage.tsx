@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CategoryHeader from './CategoryHeader';
-import { categories, generateItems, Item } from './data';
+import { categories, generateItems, Item } from '../../static/dummyItems';
 import Items from './Items';
 
 export const randomItems = generateItems();
