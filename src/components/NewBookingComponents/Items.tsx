@@ -13,11 +13,11 @@ const Items = ({
   selectedCategory: string;
 }) => {
   const topPicks = items
-    .filter((a) => a.cate === selectedCategory)
+    .filter((a) => a.category === selectedCategory)
     .sort((a, b) => b.itemRate - a.itemRate)
     .slice(0, 10);
 
-  const allItems = items.filter((a) => a.cate === selectedCategory);
+  const allItems = items.filter((a) => a.category === selectedCategory);
 
   return (
     <>

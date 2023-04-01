@@ -17,13 +17,14 @@ import { useEffect, useState } from 'react';
 import { generateItems, Item } from '@/static/dummyItems';
 import { randomItems } from '@/components/NewBookingComponents/NewBookingPage';
 import { red } from '@mui/material/colors';
-import { padding } from '@mui/system';
 
 const ItemDetailPage = () => {
   const router = useRouter();
   const { itemid } = router.query;
   const [item, setItem] = useState<Item>();
   const [loading, setLoading] = useState(true);
+
+  const today = new Date();
 
   useEffect(() => {
     if (!itemid) return;
@@ -47,7 +48,13 @@ const ItemDetailPage = () => {
                       ${item?.itemPrice.toFixed(2)}
                     </Typography>
                     <Typography variant='body1' color='text.secondary' mb={2}>
-                      Published: {'2 days ago'}
+                      Updated:{' '}
+                      {item
+                        ? Math.ceil(
+                            (today.getTime() - item.itemUpdateTime.getTime()) /
+                              (1000 * 3600 * 24)
+                          ) + ' days ago'
+                        : '-'}
                     </Typography>
                     <Divider />
                   </Box>
@@ -71,6 +78,45 @@ const ItemDetailPage = () => {
                       </Button>
                     </CardContent>
                   </Card>
+                </Grid>
+                <Grid
+                  item
+                  sx={{ width: '100%', position: 'relative', height: 400 }}
+                >
+                  <img
+                    src={item?.itemImg}
+                    alt=''
+                    style={{
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: 400,
+                      padding: 8,
+                      borderRadius: 20,
+                      position: 'absolute',
+                      filter: 'blur(4px)',
+                      opacity: 0.8,
+                    }}
+                  />
+                  <img
+                    src={item?.itemImg}
+                    alt=''
+                    style={{
+                      objectFit: 'contain',
+                      width: '100%',
+                      height: 400,
+                      padding: 8,
+                      borderRadius: 20,
+                      position: 'absolute',
+                    }}
+                  />
+                </Grid>
+                <Grid item sx={{ width: '100%', position: 'relative' }}>
+                  <Typography variant='h5' color='initial'>
+                    Detailed Description
+                  </Typography>
+                  <Typography variant='body1' color='initial'>
+                    {item?.itemDescription}
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>

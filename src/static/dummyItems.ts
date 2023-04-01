@@ -11,7 +11,7 @@ export const categories: string[] = [
 
 export interface Item {
   id: string;
-  cate: string;
+  category: string;
   itemName: string;
   bizId: string;
   itemRate: number;
@@ -21,22 +21,24 @@ export interface Item {
   amount: number;
   itemImg: string;
   itemBookedCount: number;
+  itemUpdateTime: Date;
+  itemCreatedTime: Date;
 }
 
-function generateDummyItems(cate: string): Item {
+function generateDummyItems(category: string): Item {
   const id = (Math.floor(Math.random() * 1000000) + 1).toString();
-  const itemName = `Dummy ${cate} Item`;
-  const bizId = `Dummy ${cate} Provider`;
+  const itemName = `Dummy ${category} Item`;
+  const bizId = `Dummy ${category} Provider`;
   const itemRate = Math.floor(Math.random() * 5) + 1;
-  const itemDescription = `This is a dummy ${cate} item provided by ${bizId}.`;
+  const itemDescription = `This is a dummy ${category} item provided by ${bizId}.`;
   const publishDate = new Date();
   const itemPrice = Math.floor(Math.random() * 100) + 1;
   const amount = 1;
-  const itemImg = '';
+  const itemImg = `https://source.unsplash.com/random/?${category.toLowerCase()}`;
   const itemBookedCount = Math.floor(Math.random() * 100) + 1;
   return {
     id,
-    cate,
+    category,
     itemName,
     bizId,
     itemRate,
@@ -46,6 +48,8 @@ function generateDummyItems(cate: string): Item {
     amount,
     itemImg,
     itemBookedCount,
+    itemUpdateTime: new Date('2023/3/13'),
+    itemCreatedTime: new Date('2023/3/12'),
   };
 }
 

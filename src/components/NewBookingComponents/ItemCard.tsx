@@ -55,7 +55,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
             onLoad={handleImageLoad}
             onError={handleImageError}
             alt='random image'
-            image={`https://source.unsplash.com/random/300x150/?${item.cate.toLowerCase()}`}
+            image={`https://source.unsplash.com/random/300x150/?${item.category.toLowerCase()}`}
           />
           {isLoading && (
             <Skeleton
