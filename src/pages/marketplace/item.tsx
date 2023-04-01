@@ -47,15 +47,31 @@ const ItemDetailPage = () => {
                     <Typography variant='h3' fontWeight={'bold'} mb={2}>
                       ${item?.itemPrice.toFixed(2)}
                     </Typography>
-                    <Typography variant='body1' color='text.secondary' mb={2}>
-                      Updated:{' '}
-                      {item
-                        ? Math.ceil(
-                            (today.getTime() - item.itemUpdateTime.getTime()) /
-                              (1000 * 3600 * 24)
-                          ) + ' days ago'
-                        : '-'}
-                    </Typography>
+                    <Stack
+                      direction='row'
+                      justifyContent='flex-start'
+                      alignItems='center'
+                      divider={<Divider orientation='vertical' flexItem />}
+                      spacing={4}
+                      pb={1}
+                    >
+                      <Typography variant='body1' color='text.secondary'>
+                        Updated:{' '}
+                        {item
+                          ? Math.ceil(
+                              (today.getTime() -
+                                item.itemUpdateTime.getTime()) /
+                                (1000 * 3600 * 24)
+                            ) + ' days ago'
+                          : '-'}
+                      </Typography>
+                      <Typography variant='body1' color='text.secondary'>
+                        {item?.category}
+                      </Typography>
+                      <Typography variant='body1' color='text.secondary'>
+                        Sold {item?.itemBookedCount}
+                      </Typography>
+                    </Stack>
                     <Divider />
                   </Box>
                 </Grid>
