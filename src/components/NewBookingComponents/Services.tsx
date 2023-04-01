@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { Service } from './data';
+import { Item } from './data';
 import { Grid, Typography } from '@mui/material';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ItemList from './ItemList';
@@ -8,7 +8,7 @@ const Services = ({
   services,
   selectedCategory,
 }: {
-  services: Service[];
+  services: Item[];
   selectedCategory: string;
 }) => {
   const topPicks = services

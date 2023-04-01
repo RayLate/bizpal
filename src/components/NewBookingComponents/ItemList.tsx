@@ -1,4 +1,4 @@
-import { Service } from './data';
+import { Item } from './data';
 import {
   Grid,
   Card,
@@ -30,7 +30,7 @@ import { Box } from '@mui/system';
 //   },
 // }));
 
-const ItemList = ({ items }: { items: Service[] }) => {
+const ItemList = ({ items }: { items: Item[] }) => {
   return (
     <>
       <Grid
