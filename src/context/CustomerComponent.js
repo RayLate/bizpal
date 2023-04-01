@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCustomer } from './customerContext';
-import { fetchData } from './api';
+import { sendAPICall } from './api';
 
 const CustomerComponent = () => {
   const { data, setData } = useCustomer();
@@ -10,7 +10,7 @@ const CustomerComponent = () => {
     const url = 'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/users/';
     //url += customerId
     const httpMethod = 'GET';
-    const response = await fetchData(url, httpMethod, data);
+    const response = await sendAPICall(url, httpMethod, data);
     console.log(response);
   };
 
