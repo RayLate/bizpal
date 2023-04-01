@@ -17,7 +17,7 @@ const Services = ({
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 10);
 
-  const allItems = services.filter((a) => true);
+  const allItems = services.filter((a) => a.category === selectedCategory);
 
   return (
     <>

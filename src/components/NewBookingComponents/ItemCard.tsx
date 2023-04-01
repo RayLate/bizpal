@@ -13,6 +13,9 @@ import {
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/Star';
+import NextLink from 'next/link';
+import Skeleton from '@mui/material/Skeleton';
+import { useState } from 'react';
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -20,7 +23,20 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
   border: `2px solid ${theme.palette.background.paper}`,
 }));
 
-const ItemCard = ({ item }: { item: Item }) => {
+interface ItemCardProps {
+  item: Item;
+}
+
+const ItemCard = ({ item }: ItemCardProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const handleImageLoad = () => {
+    setIsLoading(false);
+  };
+
+  const handleImageError = () => {
+    setIsLoading(false);
+  };
+
   return (
     <>
       <Card
@@ -30,12 +46,24 @@ const ItemCard = ({ item }: { item: Item }) => {
           // flexShrink: 0,
         }}
       >
-        <CardActionArea>
+        <CardActionArea
+          LinkComponent={NextLink}
+          href={`/marketplace/${item.id}`}
+        >
           <CardMedia
             component={'img'}
-            alt=''
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            alt='random image'
             image={`https://source.unsplash.com/random/300x150/?${item.category.toLowerCase()}`}
           />
+          {isLoading && (
+            <Skeleton
+              sx={{ height: 150 }}
+              animation='wave'
+              variant='rectangular'
+            />
+          )}
           <CardContent>
             <Stack
               direction='row'
