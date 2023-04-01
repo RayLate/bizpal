@@ -109,7 +109,7 @@ const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
             {topLinks.map((link, index) => (
               <ListItem key={link.label} disablePadding>
                 <ListItemButtonWithRoute
-                  selected={router.pathname === link.href}
+                  selected={router.pathname.indexOf(link.href) > -1}
                   text={link.label}
                   link={link.href}
                 />

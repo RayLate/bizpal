@@ -48,7 +48,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
       >
         <CardActionArea
           LinkComponent={NextLink}
-          href={`/marketplace/${item.id}`}
+          href={`/marketplace/item?itemid=${item.id}`}
         >
           <CardMedia
             component={'img'}

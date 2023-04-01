@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import CategoryHeader from './CategoryHeader';
-import { categories, generateServices, Item } from './data';
-import Services from './Services';
+import { categories, generateItems, Item } from './data';
+import Items from './Items';
+
+export const randomItems = generateItems();
 
 const NewBookingPage = () => {
   const [category, setCategory] = useState<string>(categories[0]);
-  const [services, setServices] = useState<Item[]>(generateServices());
+  const [items, setItems] = useState<Item[]>(randomItems);
 
   return (
     <>
@@ -14,7 +16,7 @@ const NewBookingPage = () => {
         setCategory={setCategory}
         categories={categories}
       />
-      <Services services={services} selectedCategory={category} />
+      <Items items={items} selectedCategory={category} />
     </>
   );
 };

@@ -20,7 +20,7 @@ export interface Item {
   price: number;
 }
 
-function generateDummyService(category: string): Item {
+function generateDummyItems(category: string): Item {
   const id = (Math.floor(Math.random() * 1000000) + 1).toString();
   const serviceName = `Dummy ${category} Item`;
   const providerName = `Dummy ${category} Provider`;
@@ -41,13 +41,13 @@ function generateDummyService(category: string): Item {
   };
 }
 
-export const generateServices = () => {
+export const generateItems = () => {
   const dummyServices: Item[] = [];
 
   for (let i = 0; i < 100; i++) {
     const randomCategory =
       categories[Math.floor(Math.random() * categories.length)];
-    const dummyService = generateDummyService(randomCategory);
+    const dummyService = generateDummyItems(randomCategory);
     dummyServices.push(dummyService);
   }
 

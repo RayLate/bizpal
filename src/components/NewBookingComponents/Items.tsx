@@ -5,19 +5,19 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import TopPicks from './TopPicks';
 import AllPicks from './AllPicks';
 
-const Services = ({
-  services,
+const Items = ({
+  items,
   selectedCategory,
 }: {
-  services: Item[];
+  items: Item[];
   selectedCategory: string;
 }) => {
-  const topPicks = services
+  const topPicks = items
     .filter((a) => a.category === selectedCategory)
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 10);
 
-  const allItems = services.filter((a) => a.category === selectedCategory);
+  const allItems = items.filter((a) => a.category === selectedCategory);
 
   return (
     <>
@@ -37,4 +37,4 @@ const Services = ({
   );
 };
 
-export default Services;
+export default Items;

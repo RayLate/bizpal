@@ -1,6 +1,5 @@
 import { Item } from './data';
-import { Grid } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import ItemCard from './ItemCard';
 
 const TopPicks = ({ items }: { items: Item[] }) => {
