@@ -83,12 +83,26 @@ const DashboardLayout = ({ children }: DashboardProps) => {
         <TopNavBar />
         <VerticalNav user={session.user} drawerWidth={drawerWidth} />
         <Toolbar />
-        <Box display={'flex'} sx={{ height: '100%', backgroundColor: 'white' }}>
+        <Box
+          display={'flex'}
+          sx={{ height: '100%', backgroundColor: 'white', overflow: 'hidden' }}
+        >
           <Box sx={{ width: drawerWidth }} />
           <Box
-            mx={5}
+            ml={5}
             p={5}
-            sx={{ height: '100%', width: '100%', overflow: 'auto' }}
+            sx={{
+              height: '100%',
+              width: '100%',
+              overflow: 'auto',
+              '&::-webkit-scrollbar': {
+                width: '12px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                borderRadius: '4px',
+                backgroundColor: 'rgba(0,0,0,0.3)',
+              },
+            }}
           >
             {children}
           </Box>
