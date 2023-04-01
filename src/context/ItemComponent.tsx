@@ -9,7 +9,7 @@ const ItemComponent: React.FC = () => {
   const handleButtonClick = async () => {
     const url = 'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items';
     const httpMethod = 'GET'; // Replace with your desired HTTP method
-    const response = await sendAPICall(url, httpMethod, data);
+    const response = await sendAPICall({url, httpMethod, data});
     console.log(response);
   };
 

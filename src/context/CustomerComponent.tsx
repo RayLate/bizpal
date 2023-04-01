@@ -11,7 +11,7 @@ const CustomerComponent: React.FC = () => {
       if (customerId) {
         const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/users/${customerId}`;
         const httpMethod = 'GET'; // Replace with your desired HTTP method
-        const response = await sendAPICall(url, httpMethod, data);
+        const response = await sendAPICall({url, httpMethod, data});
         console.log(response);
       }
     };
@@ -22,7 +22,7 @@ const CustomerComponent: React.FC = () => {
   const handlePostButtonClick = async () => {
     const url = 'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/users/'; // Update with your desired URL
     const httpMethod = 'POST';
-    const response = await sendAPICall(url, httpMethod, data);
+    const response = await sendAPICall({url, httpMethod, data});
     console.log(response);
   };
 
