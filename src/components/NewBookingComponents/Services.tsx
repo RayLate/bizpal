@@ -19,7 +19,7 @@ const Services = ({
   return (
     <>
       <Box my={3}>
-        <Typography variant='h5' color='initial' fontWeight={'bold'} mb={3}>
+        <Typography variant='h5' color='initial' fontWeight={'bold'} mb={1}>
           Top Picks <EmojiEventsIcon fontSize='inherit' />
         </Typography>
         <ItemList items={topPicks} />
