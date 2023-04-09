@@ -17,10 +17,14 @@ import LoadingAnimation from '../templates/LoadingPage';
 import { useCustomerData } from '@/context/CustomerContext';
 
 const SignOutButton = () => {
+  const { customer, setSessionCustomer, clearCustomer } = useCustomerData();
   return (
     <Button
       color='inherit'
       onClick={(e: any) => {
+        console.log('Logging out', customer?.email);
+        setSessionCustomer(null);
+        clearCustomer();
         e.preventDefault();
         signOut({ callbackUrl: '/' });
       }}
@@ -70,6 +74,7 @@ const DashboardLayout = ({ children }: DashboardProps) => {
 
   useEffect(() => {
     if (status === 'unauthenticated' && !session) {
+      setSessionCustomer(null);
       clearCustomer();
       router.push('/access-denied');
     }

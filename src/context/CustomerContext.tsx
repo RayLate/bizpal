@@ -22,10 +22,8 @@ export interface NewCustomerData {
 }
 
 interface CustomerDataContextValue {
-  customer: CustomerData | NewCustomerData | null;
-  setCustomer: React.Dispatch<
-    React.SetStateAction<CustomerData | NewCustomerData | null>
-  >;
+  customer: CustomerData | null;
+  setCustomer: React.Dispatch<React.SetStateAction<CustomerData | null>>;
   setSessionCustomer: React.Dispatch<
     React.SetStateAction<NewCustomerData | null>
   >;
@@ -44,12 +42,9 @@ export const useCustomerData = () => useContext(CustomerDataContext);
 export const CustomerDataProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [customer, setCustomer] = useState<
-    CustomerData | NewCustomerData | null
-  >(null);
-  const [sessionCustomer, setSessionCustomer] = useState<
-    CustomerData | NewCustomerData | null
-  >(null);
+  const [customer, setCustomer] = useState<CustomerData | null>(null);
+  const [sessionCustomer, setSessionCustomer] =
+    useState<NewCustomerData | null>(null);
 
   function clearCustomer() {
     setCustomer(null);
