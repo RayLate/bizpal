@@ -63,7 +63,6 @@ export const CustomerDataProvider: React.FC<PropsWithChildren> = ({
       const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/users`;
       const httpMethod = 'POST';
       const data = {
-        userId: sessionCustomer.email,
         email: sessionCustomer.email,
         user: sessionCustomer.user,
         region: 'Singapore',
