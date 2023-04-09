@@ -3,8 +3,6 @@ import { Item } from '../../static/dummyItems';
 import ItemCard from './ItemCard';
 
 const AllPicks = ({ items }: { items: Item[] }) => {
-  console.log(items.length);
-
   return (
     <>
       <Box

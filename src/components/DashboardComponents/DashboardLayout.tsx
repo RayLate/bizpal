@@ -14,6 +14,7 @@ import { PropsWithChildren, ReactNode, useEffect } from 'react';
 import { signOut } from 'next-auth/react';
 import VerticalNav from './VerticalNav';
 import LoadingAnimation from '../templates/LoadingPage';
+import { useCustomerData } from '@/context/CustomerContext';
 
 const SignOutButton = () => {
   return (
@@ -62,12 +63,21 @@ interface DashboardProps {
 const drawerWidth = 240;
 
 const DashboardLayout = ({ children }: DashboardProps) => {
+  const { customer, setSessionCustomer, clearCustomer } = useCustomerData();
+
   const { data: session, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
     if (status === 'unauthenticated' && !session) {
+      clearCustomer();
       router.push('/access-denied');
+    }
+    if (!customer && session && session.user) {
+      setSessionCustomer({
+        email: session.user.email as string,
+        user: session.user.name as string,
+      });
     }
   }, [status, session, router]);
 

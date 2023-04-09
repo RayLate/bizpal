@@ -1,7 +1,7 @@
 interface FetchDataProps {
   url: string;
   httpMethod?: 'GET' | 'POST' | 'PUT' | 'DELETE';
-  data?: Record<string, unknown>;
+  data?: any;
 }
 
 export const sendAPICall = async ({
@@ -11,7 +11,10 @@ export const sendAPICall = async ({
 }: FetchDataProps): Promise<any> => {
   const requestOptions: RequestInit = {
     method: httpMethod,
-    headers: { 'Content-Type': 'application/json', 'x-api-key': 'xupOnEtvaP3fghp9nenYh2P4Bd6AusGS2z18Ellb' },
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': 'xupOnEtvaP3fghp9nenYh2P4Bd6AusGS2z18Ellb',
+    },
   };
 
   if (httpMethod === 'POST' || httpMethod === 'PUT') {
