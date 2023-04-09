@@ -1,10 +1,16 @@
-import React, { createContext, PropsWithChildren, useContext, useState } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from 'react';
 
 export interface BookingData {
   userId: string;
   itemId: string;
   bizId: string;
   amount: number;
+  bookingDate: string;
 }
 
 interface BookingDataContextValue {
@@ -17,15 +23,15 @@ const BookingDataContext = createContext<BookingDataContextValue>({
   setBooking: () => {},
 });
 
-export const useBookingData = () => useContext(BookingDataContext)
+export const useBookingData = () => useContext(BookingDataContext);
 
 export const BookingDataProvider: React.FC<PropsWithChildren> = ({
-    children,
+  children,
 }) => {
-    const [booking, setBooking] = useState<BookingData | null>(null);
-    return (
-        <BookingDataContext.Provider value={{booking, setBooking}}>
-        {children}
-        </BookingDataContext.Provider>
-    );
+  const [booking, setBooking] = useState<BookingData | null>(null);
+  return (
+    <BookingDataContext.Provider value={{ booking, setBooking }}>
+      {children}
+    </BookingDataContext.Provider>
+  );
 };
