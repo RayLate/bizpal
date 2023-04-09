@@ -10,7 +10,7 @@ export const categories: string[] = [
 ];
 
 export interface Item {
-  id: string;
+  itemId: string;
   category: string;
   itemName: string;
   bizId: string;
@@ -26,7 +26,7 @@ export interface Item {
 }
 
 function generateDummyItems(category: string): Item {
-  const id = (Math.floor(Math.random() * 1000000) + 1).toString();
+  const itemId = (Math.floor(Math.random() * 1000000) + 1).toString();
   const itemName = `Dummy ${category} Item`;
   const bizId = `Dummy ${category} Provider`;
   const itemRate = Math.floor(Math.random() * 5) + 1;
@@ -37,7 +37,7 @@ function generateDummyItems(category: string): Item {
   const itemImg = `https://source.unsplash.com/random/?${category.toLowerCase()}`;
   const itemBookedCount = Math.floor(Math.random() * 100) + 1;
   return {
-    id,
+    itemId,
     category,
     itemName,
     bizId,

@@ -12,10 +12,9 @@ const ItemDetailPage = () => {
   const [item, setItem] = useState<Item>();
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     if (!itemid) return;
-    setItem(randomItems.find((i) => i.id === itemid));
+    setItem(randomItems.find((i) => i.itemId === itemid));
     setLoading(false);
   }, [itemid, router]);
 

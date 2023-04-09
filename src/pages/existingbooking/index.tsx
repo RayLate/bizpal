@@ -1,10 +1,11 @@
 import DashboardLayout from '@/components/DashboardComponents/DashboardLayout';
+import ExistingBookingPage from '@/components/ExistingBookingComponents/ExistingBookingPage';
 
 const ExistingBooking = () => {
   return (
     <>
       <DashboardLayout>
-        <div></div>
+        <ExistingBookingPage />
       </DashboardLayout>
     </>
   );

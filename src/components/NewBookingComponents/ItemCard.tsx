@@ -37,6 +37,11 @@ const ItemCard = ({ item }: ItemCardProps) => {
     setIsLoading(false);
   };
 
+  const today = new Date();
+
+  const diffInMs: number = today.getTime() - item.itemUpdateTime.getTime();
+  const diffInDays: number = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
   return (
     <>
       <Card
@@ -48,7 +53,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
       >
         <CardActionArea
           LinkComponent={NextLink}
-          href={`/marketplace/item?itemid=${item.id}`}
+          href={`/marketplace/item?itemid=${item.itemId}`}
         >
           <CardMedia
             component={'img'}
@@ -106,7 +111,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
               </Typography>
             </Stack>
             <Typography variant='caption' color='grey'>
-              1 day ago
+              {diffInDays === 0 ? 'Today' : diffInDays + ' day ago'}
             </Typography>
           </CardContent>
         </CardActionArea>

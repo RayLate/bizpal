@@ -5,15 +5,11 @@ import {
   CardHeader,
   Button,
   Box,
-  Alert,
-  Fade,
 } from '@mui/material';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import NextLink from 'next/link';
 import { Item } from '@/static/dummyItems';
-import { BookingData, useBookingData } from '@/context/BookingContext';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -22,6 +18,7 @@ import { CustomerData, useCustomerData } from '@/context/CustomerContext';
 import { createPortal } from 'react-dom';
 import AlertTemplate from '../templates/AlertTemplate';
 import { sendAPICall } from '@/context/api';
+import { NewBooking } from '@/interface/interface';
 
 const BookingBanner = ({ item }: { item: Item | undefined }) => {
   const initialDate = new Date();
@@ -37,13 +34,12 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
   };
 
   const { customer } = useCustomerData();
-  const { setBooking } = useBookingData();
 
   const onClickHandler = (item: Item, bookingDate: Date) => {
     if (customer) {
-      const newBooking: BookingData = {
+      const newBooking: NewBooking = {
         userId: customer.email,
-        itemId: '1074f212-56ab-4c71-b2b6-383305049917' ?? item.id,
+        itemId: '1074f212-56ab-4c71-b2b6-383305049917' ?? item.itemId,
         bizId: item.bizId,
         amount: quantity,
         bookingDate:
@@ -51,10 +47,9 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
           ' ' +
           bookingDate.toLocaleTimeString('en-SG', { hour12: false }),
       };
-      console.log(newBooking);
 
       // Create the boooking now
-      const createBooking = async (newBooking: BookingData) => {
+      const createBooking = async (newBooking: NewBooking) => {
         const url =
           'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/bookings';
         const httpMethod = 'POST';

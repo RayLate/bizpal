@@ -22,7 +22,7 @@ const TopPicks = ({ items }: { items: Item[] }) => {
         gap={2}
       >
         {items.map((item, index) => (
-          <Box key={item.id} sx={{ width: 300 }}>
+          <Box key={item.itemId} sx={{ width: 300 }}>
             <ItemCard item={item} />
           </Box>
         ))}

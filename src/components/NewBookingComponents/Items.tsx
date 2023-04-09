@@ -12,12 +12,13 @@ const Items = ({
   items: Item[];
   selectedCategory: string;
 }) => {
-  const topPicks = items
-    .filter((a) => a.category === selectedCategory)
+  const allItems =
+    selectedCategory === 'All'
+      ? items
+      : items.filter((a) => a.category === selectedCategory);
+  const topPicks = allItems
     .sort((a, b) => b.itemRate - a.itemRate)
     .slice(0, 10);
-
-  const allItems = items.filter((a) => a.category === selectedCategory);
 
   return (
     <>
@@ -29,7 +30,7 @@ const Items = ({
       </Box>
       <Box my={3}>
         <Typography variant='h5' color='initial' fontWeight={'bold'} mb={1}>
-          All
+          All ({allItems.length})
         </Typography>
         <AllPicks items={allItems} />
       </Box>
