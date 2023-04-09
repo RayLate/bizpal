@@ -21,6 +21,7 @@ import Select from '@mui/material/Select';
 import { CustomerData, useCustomerData } from '@/context/CustomerContext';
 import { createPortal } from 'react-dom';
 import AlertTemplate from '../templates/AlertTemplate';
+import { sendAPICall } from '@/context/api';
 
 const BookingBanner = ({ item }: { item: Item | undefined }) => {
   const initialDate = new Date();
@@ -42,7 +43,7 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
     if (customer) {
       const newBooking: BookingData = {
         userId: customer.email,
-        itemId: item.id,
+        itemId: '1074f212-56ab-4c71-b2b6-383305049917' ?? item.id,
         bizId: item.bizId,
         amount: quantity,
         bookingDate:
@@ -53,7 +54,26 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
       console.log(newBooking);
 
       // Create the boooking now
-      setShowAlert(true);
+      const createBooking = async (newBooking: BookingData) => {
+        const url =
+          'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/bookings';
+        const httpMethod = 'POST';
+        const response = await sendAPICall({
+          url,
+          httpMethod,
+          data: newBooking,
+        });
+
+        return response;
+      };
+
+      createBooking(newBooking).then((response) => {
+        if (response) {
+          console.log(response);
+          setShowAlert(false);
+          setShowAlert(true);
+        }
+      });
     }
   };
 
@@ -87,7 +107,7 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
               inline
               showTimeSelect
               timeIntervals={60}
-              timeFormat='hh:mm'
+              timeFormat='HH:mm'
             />
           </Box>
           <Box mb={2}>
