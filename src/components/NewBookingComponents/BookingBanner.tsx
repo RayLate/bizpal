@@ -5,6 +5,8 @@ import {
   CardHeader,
   Button,
   Box,
+  Alert,
+  Fade,
 } from '@mui/material';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
@@ -16,6 +18,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { CustomerData, useCustomerData } from '@/context/CustomerContext';
+import { createPortal } from 'react-dom';
+import AlertTemplate from '../templates/AlertTemplate';
 
 const BookingBanner = ({ item }: { item: Item | undefined }) => {
   const initialDate = new Date();
@@ -25,26 +30,46 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
   initialDate.setHours(initialDate.getHours() + 1);
   const [startDate, setStartDate] = useState(initialDate);
   const [quantity, setQuantity] = useState(1);
+  const [showAlert, setShowAlert] = useState(false);
   const handleChange = (event: any) => {
     setQuantity(+event.target.value);
   };
 
+  const { customer } = useCustomerData();
   const { setBooking } = useBookingData();
 
   const onClickHandler = (item: Item, bookingDate: Date) => {
-    const newBooking: BookingData = {
-      userId: 'test',
-      itemId: item.id,
-      bizId: item.bizId,
-      amount: 1,
-      bookingDate:
-        bookingDate.toLocaleDateString() + bookingDate.toLocaleTimeString(),
-    };
-    console.log(newBooking);
+    if (customer) {
+      const newBooking: BookingData = {
+        userId: customer.email,
+        itemId: item.id,
+        bizId: item.bizId,
+        amount: quantity,
+        bookingDate:
+          bookingDate.toLocaleDateString() +
+          ' ' +
+          bookingDate.toLocaleTimeString('en-SG', { hour12: false }),
+      };
+      console.log(newBooking);
+
+      // Create the boooking now
+      setShowAlert(true);
+    }
   };
 
   return (
     <>
+      {showAlert
+        ? createPortal(
+            <AlertTemplate
+              showAlert={showAlert}
+              title='Booking Successfully Added'
+              body='Congratulations, your booking has been successfully created!Your booking confirmation details have been sent to your email, so please check your inbox for further instructions and information.'
+              onClose={() => setShowAlert(false)}
+            />,
+            document.getElementById('alert-portal')!
+          )
+        : null}
       <Card sx={{ width: '100%', backgroundColor: '#FEF4CF' }}>
         <CardHeader
           title={
@@ -111,7 +136,7 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
             </Typography>
           </Typography>
           <Button
-            LinkComponent={NextLink}
+            // LinkComponent={NextLink}
             variant='contained'
             color='secondary'
             sx={{
@@ -120,7 +145,10 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
               fontSize: 16,
               fontWeight: 'bold',
             }}
-            href={`/marketplace/reserve?itemid=${item?.id}`}
+            // href={`/marketplace/reserve?itemid=${item?.id}`}
+            onClick={() => {
+              item ? onClickHandler(item, startDate) : null;
+            }}
           >
             Reserve Now
           </Button>
