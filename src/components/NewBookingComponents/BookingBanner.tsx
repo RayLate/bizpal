@@ -9,7 +9,6 @@ import {
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Item } from '@/static/dummyItems';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -18,7 +17,7 @@ import { CustomerData, useCustomerData } from '@/context/CustomerContext';
 import { createPortal } from 'react-dom';
 import AlertTemplate from '../templates/AlertTemplate';
 import { sendAPICall } from '@/context/api';
-import { NewBooking } from '@/interface/interface';
+import { Item, NewBooking } from '@/interface/interface';
 
 const BookingBanner = ({ item }: { item: Item | undefined }) => {
   const initialDate = new Date();

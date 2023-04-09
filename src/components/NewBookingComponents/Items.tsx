@@ -1,9 +1,9 @@
 import { Box } from '@mui/system';
-import { Item } from '../../static/dummyItems';
 import { Grid, Typography } from '@mui/material';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import TopPicks from './TopPicks';
 import AllPicks from './AllPicks';
+import { Item } from '@/interface/interface';
 
 const Items = ({
   items,

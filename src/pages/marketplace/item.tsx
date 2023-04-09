@@ -2,9 +2,9 @@ import { useRouter } from 'next/router';
 
 import DashboardLayout from '@/components/DashboardComponents/DashboardLayout';
 import { useEffect, useState } from 'react';
-import { generateItems, Item } from '@/static/dummyItems';
-import { randomItems } from '@/components/NewBookingComponents/NewBookingPage';
 import ItemDetail from '@/components/NewBookingComponents/ItemDetail';
+import { sendAPICall } from '@/context/api';
+import { Item } from '@/interface/interface';
 
 const ItemDetailPage = () => {
   const router = useRouter();
@@ -14,9 +14,33 @@ const ItemDetailPage = () => {
 
   useEffect(() => {
     if (!itemid) return;
-    setItem(randomItems.find((i) => i.itemId === itemid));
-    setLoading(false);
-  }, [itemid, router]);
+    const getItem = async () => {
+      const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items/${itemid}`;
+      const httpMethod = 'GET';
+      const response = await sendAPICall({ url, httpMethod });
+
+      console.log(response);
+      if (response) {
+        const item: Item = {
+          itemId: response[0].itemId,
+          category: response[0].attr.category,
+          itemName: response[0].attr.itemName,
+          itemDescription: response[0].attr.itemDescription,
+          itemImg: response[0].attr.itemImg,
+          itemPrice: response[0].attr.itemPrice,
+          itemRate: response[0].attr.itemRate,
+          itemBookedCount: response[0].attr.itemBookedCount,
+          itemCreateTime: new Date(response[0].attr.itemCreateTime),
+          itemUpdateTime: new Date(response[0].attr.itemUpdateTime),
+          totalAmount: response[0].attr.totalAmount,
+          bizId: response[0].bizId,
+        };
+        console.log(item);
+        setItem(item);
+      }
+    };
+    getItem();
+  }, [itemid]);
 
   return (
     <>

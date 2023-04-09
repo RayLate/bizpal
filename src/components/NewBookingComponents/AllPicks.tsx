@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
-import { Item } from '../../static/dummyItems';
 import ItemCard from './ItemCard';
+import { Item } from '@/interface/interface';
 
 const AllPicks = ({ items }: { items: Item[] }) => {
   return (

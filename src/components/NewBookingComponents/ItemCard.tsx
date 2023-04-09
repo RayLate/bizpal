@@ -1,4 +1,3 @@
-import { Item } from '../../static/dummyItems';
 import {
   Grid,
   Card,
@@ -16,6 +15,7 @@ import StarIcon from '@mui/icons-material/Star';
 import NextLink from 'next/link';
 import Skeleton from '@mui/material/Skeleton';
 import { useState } from 'react';
+import { Item } from '@/interface/interface';
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -23,11 +23,9 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
   border: `2px solid ${theme.palette.background.paper}`,
 }));
 
-interface ItemCardProps {
-  item: Item;
-}
 
-const ItemCard = ({ item }: ItemCardProps) => {
+
+const ItemCard = ({ item }: {item:Item}) => {
   const [isLoading, setIsLoading] = useState(true);
   const handleImageLoad = () => {
     setIsLoading(false);

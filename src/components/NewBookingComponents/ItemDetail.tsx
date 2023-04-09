@@ -1,4 +1,3 @@
-import { Item } from '@/static/dummyItems';
 import {
   Typography,
   Grid,
@@ -14,6 +13,7 @@ import {
 import { red } from '@mui/material/colors';
 import BookingBanner from './BookingBanner';
 import { BookingDataProvider } from '@/context/BookingContext';
+import { Item } from '@/interface/interface';
 
 const ItemDetail = ({ item }: { item: Item | undefined }) => {
   const today = new Date();

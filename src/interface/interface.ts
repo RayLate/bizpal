@@ -5,13 +5,12 @@ export interface Item {
   bizId: string;
   itemRate: number;
   itemDescription: string;
-  publishDate: Date;
   itemPrice: number;
-  amount: number;
+  totalAmount: number;
   itemImg: string;
   itemBookedCount: number;
   itemUpdateTime: Date;
-  itemCreatedTime: Date;
+  itemCreateTime: Date;
 }
 
 export interface NewBooking {

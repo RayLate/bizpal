@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
 import CategoryHeader from './CategoryHeader';
-import { categories, generateItems } from '../../static/dummyItems';
 import Items from './Items';
 import { sendAPICall } from '@/context/api';
 import { Item } from '@/interface/interface';
 
-export const randomItems = generateItems();
-
 const NewBookingPage = () => {
   const [categories, setCategories] = useState<string[]>(['All']);
   const [category, setCategory] = useState<string>('All');
-  const [items, setItems] = useState<Item[]>(randomItems);
+  const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
     let isMounted = true;
