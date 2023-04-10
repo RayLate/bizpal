@@ -1,3 +1,5 @@
+import { useCustomerData } from '@/context/CustomerContext';
+import { useThemeToggle } from '@/context/ThemeContext';
 import {
   Box,
   List,
@@ -11,6 +13,7 @@ import {
   Avatar,
   Typography,
   Stack,
+  Button,
 } from '@mui/material';
 import { ListItemButtonProps } from '@mui/material/ListItemButton';
 import { styled } from '@mui/material/styles';
@@ -45,12 +48,22 @@ const CustomListItemButton = styled(ListItemButton)<ListItemButtonProps>(
 
 const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
   const router = useRouter();
-  const topLinks = [
-    { label: 'New Booking', href: '/marketplace' },
-    { label: 'Existing Booking', href: '/existingbooking' },
-    { label: 'Past Booking', href: '/history' },
-  ];
-  const middleLinks = [{ label: 'Switch to Seller', href: '/business' }];
+  const { customer } = useCustomerData();
+  const { displayTheme, setDisplayTheme } = useThemeToggle();
+  const topLinks =
+    displayTheme === 'user'
+      ? [
+          { label: 'New Booking', href: '/marketplace' },
+          { label: 'Existing Booking', href: '/existingbooking' },
+          { label: 'Past Booking', href: '/history' },
+        ]
+      : customer?.isSeller
+      ? [
+          { label: 'Manage Service', href: '/manageservice' },
+          { label: 'Publish Service', href: '/addservice' },
+        ]
+      : [{ label: 'Registeration', href: '/business' }];
+
   const bottomLinks = [{ label: 'About Us', href: '/aboutus' }];
 
   const ListItemButtonWithRoute = ({
@@ -70,6 +83,15 @@ const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
       </CustomListItemButton>
     );
   };
+
+  function onClickHandler() {
+    setDisplayTheme((prev) => (prev === 'user' ? 'seller' : 'user'));
+    if (displayTheme === 'user') {
+      router.push(customer?.isSeller === 1 ? '/manageservice' : '/business');
+    } else {
+      router.push('/marketplace');
+    }
+  }
 
   return (
     <Drawer
@@ -117,18 +139,21 @@ const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
             ))}
           </List>
           <Divider />
+          <Box my={2} px={3} sx={{ width: '100%' }}>
+            <Button
+              variant='contained'
+              sx={{
+                width: '100%',
+                fontWeight: 'bold',
+                color: 'black',
+                backgroundColor: (theme) => theme.palette.secondary.light,
+              }}
+              onClick={() => onClickHandler()}
+            >
+              {displayTheme === 'user' ? 'Switch to Seller' : 'Switch to Buyer'}
+            </Button>
+          </Box>
 
-          <List>
-            {middleLinks.map((link, index) => (
-              <ListItem key={link.label} disablePadding>
-                <ListItemButtonWithRoute
-                  selected={router.pathname === link.href}
-                  text={link.label}
-                  link={link.href}
-                />
-              </ListItem>
-            ))}
-          </List>
           <Divider />
           <List>
             {bottomLinks.map((link, index) => (
