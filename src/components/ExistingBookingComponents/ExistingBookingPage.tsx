@@ -16,6 +16,8 @@ import LoadingItemCard from '../NewBookingComponents/LoadingItemCard';
 import { Booking, GroupbyBooking } from '@/interface/interface';
 import BookingCard from './BookingCard';
 import ModalTemplate from '../templates/ModalTemplate';
+import AlertTemplate from '../templates/AlertTemplate';
+import { createPortal } from 'react-dom';
 
 export function formatDate(date: Date) {
   const year = date.getFullYear();
@@ -32,6 +34,7 @@ export default function ExistingBookingPage() {
   const { customer } = useCustomerData();
   const [openModal, setOpenModal] = useState(false);
   const [bookingDetail, setBookingDetail] = useState<Booking | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -81,18 +84,30 @@ export default function ExistingBookingPage() {
     if (bookingDetail) {
       const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/bookings/${bookingDetail.bookingId}`;
       const httpMethod = 'PUT';
-      const data = { ...bookingDetail, bookingStatus: 'CANCELED' };
+      const data = { bookingStatus: 'CANCELED' };
       const response = await sendAPICall({ url, httpMethod, data });
       if (response) {
         console.log(response);
         setOpenModal(false);
         setBookingDetail(null);
+        setShowAlert(true);
       }
     }
   };
 
   return (
     <>
+      {showAlert
+        ? createPortal(
+            <AlertTemplate
+              showAlert={showAlert}
+              title='Booking Successfully Canceled'
+              body='Your booking has been successfully canceled as per your request. Thank you for choosing us, and we hope to have the opportunity to serve you again in the future.'
+              onClose={() => setShowAlert(false)}
+            />,
+            document.getElementById('alert-portal')!
+          )
+        : null}
       <Box>
         <Typography variant='h4' color='initial' fontWeight='bold' mb={3}>
           Existing Booking
@@ -194,7 +209,7 @@ export default function ExistingBookingPage() {
                     <Button
                       variant='contained'
                       color='error'
-                      onClick={() => {}}
+                      onClick={() => cancelBookings()}
                     >
                       Cancel Booking
                     </Button>

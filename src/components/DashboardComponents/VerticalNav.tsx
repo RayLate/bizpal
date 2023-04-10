@@ -49,7 +49,7 @@ const CustomListItemButton = styled(ListItemButton)<ListItemButtonProps>(
 const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
   const router = useRouter();
   const { customer } = useCustomerData();
-  const { displayTheme, setDisplayTheme } = useThemeToggle();
+  const { displayTheme, changeDisplayTheme } = useThemeToggle();
   const topLinks =
     displayTheme === 'user'
       ? [
@@ -85,7 +85,7 @@ const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
   };
 
   function onClickHandler() {
-    setDisplayTheme((prev) => (prev === 'user' ? 'seller' : 'user'));
+    changeDisplayTheme(displayTheme === 'user' ? 'seller' : 'user');
     if (displayTheme === 'user') {
       router.push(customer?.isSeller === 1 ? '/manageservice' : '/business');
     } else {

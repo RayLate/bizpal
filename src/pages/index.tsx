@@ -13,7 +13,13 @@ export default function Home() {
 
   useEffect(() => {
     if (status === 'authenticated' && session.user) {
-      router.push('/marketplace');
+      switch (localStorage.getItem('displayTheme')) {
+        case 'seller':
+          router.push('/business');
+          break;
+        default:
+          router.push('/marketplace');
+      }
     }
   }, [status, session, router]);
 
