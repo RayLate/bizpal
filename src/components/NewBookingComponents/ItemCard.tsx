@@ -23,9 +23,7 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
   border: `2px solid ${theme.palette.background.paper}`,
 }));
 
-
-
-const ItemCard = ({ item }: {item:Item}) => {
+const ItemCard = ({ item }: { item: Item }) => {
   const [isLoading, setIsLoading] = useState(true);
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -57,7 +55,12 @@ const ItemCard = ({ item }: {item:Item}) => {
             onLoad={handleImageLoad}
             onError={handleImageError}
             alt='random image'
-            image={`https://source.unsplash.com/random/300x150/?${item.category.toLowerCase()}`}
+            image={
+              item.itemImg.startsWith('http')
+                ? item.itemImg
+                : `https://source.unsplash.com/random/300x150/?${item.category.toLowerCase()}`
+            }
+            sx={{ height: 150, width: 300 }}
           />
           {isLoading && (
             <Skeleton

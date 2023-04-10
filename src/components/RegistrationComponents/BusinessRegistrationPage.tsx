@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import RegistrationForm from './RegistrationForm';
 
 export default function BusinessRegistrationPage() {
   return (
@@ -13,6 +14,7 @@ export default function BusinessRegistrationPage() {
           and start building your online business with us.
         </Typography>
       </Box>
+      <RegistrationForm />
     </>
   );
 }
