@@ -6,6 +6,7 @@ export default function Document() {
       <Head />
       <body>
         <div id='alert-portal' />
+        <div id='modal-portal' />
         <Main />
         <NextScript />
       </body>

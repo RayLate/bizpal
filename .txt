@@ -1,0 +1,17 @@
+{
+    "bookingId": "e0e7f206-1741-4cb9-910a-045c3c833040",
+    "bizId": "testBiz",
+    "bookingStatus": "BOOKED",
+    "bookingDate": "2023-04-19T21:00:00.000Z",
+    "bookingCreateTime": "2023-04-09T08:03:30.545Z",
+    "bookingUpdateTime": "2023-04-09T08:03:30.545Z",
+    "bookingAmount": 1,
+    "itemId": "1074f212-56ab-4c71-b2b6-383305049917",
+    "totalAmount": 5,
+    "itemName": "testItemName10",
+    "itemImg": "testS3Url10",
+    "itemPrice": 91,
+    "itemDescription": "this is the description section",
+    "itemRate": 4.72,
+    "itemBookedCount": 13
+}

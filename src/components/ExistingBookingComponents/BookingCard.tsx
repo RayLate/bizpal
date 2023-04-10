@@ -1,8 +1,34 @@
 import { Booking } from '@/interface/interface';
-import { Card, CardContent, Stack, Typography } from '@mui/material';
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Stack,
+  Typography,
+} from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import ModalTemplate from '../templates/ModalTemplate';
 
-export default function BookingCard({ booking }: { booking: Booking }) {
+interface BookingCardProps {
+  booking: Booking;
+  setOpenModal: (b: boolean) => void;
+  setBookingDetail: (booking: Booking) => void;
+}
+
+export default function BookingCard({
+  booking,
+  setOpenModal,
+  setBookingDetail,
+}: BookingCardProps) {
+  console.log(booking);
+
+  function onClickHandler() {
+    setOpenModal(true);
+    setBookingDetail(booking);
+  }
+
   return (
     <>
       <Card
@@ -17,25 +43,27 @@ export default function BookingCard({ booking }: { booking: Booking }) {
           image={booking.itemImg}
           height={150}
         />
-        <CardContent>
-          <Stack
-            direction='row'
-            justifyContent='space-between'
-            alignItems='center'
-            spacing={2}
-            mb={1}
-          >
-            <Typography
-              variant='h6'
-              color='initial'
-              component='div'
-              fontWeight={'bold'}
-              noWrap={true}
-            >
-              {booking.itemName}
-            </Typography>
-          </Stack>
-        </CardContent>
+        <CardActionArea onClick={onClickHandler}>
+          <CardContent>
+            <Stack direction='column' gap={1}>
+              <Typography
+                variant='h5'
+                color='initial'
+                component='div'
+                fontWeight={'bold'}
+                noWrap={true}
+              >
+                {booking.itemName}
+              </Typography>
+              <Typography variant='body1' color='initial'>
+                {booking.bizId}
+              </Typography>
+              <Typography variant='body1' color='initial'>
+                <b>Booking Time:</b> {booking.bookingDate.toLocaleTimeString()}
+              </Typography>
+            </Stack>
+          </CardContent>
+        </CardActionArea>
       </Card>
     </>
   );

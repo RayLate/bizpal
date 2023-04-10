@@ -6,17 +6,32 @@ import {
   Box,
   Typography,
   Card,
+  Stack,
   Skeleton,
   CardContent,
+  Divider,
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import LoadingItemCard from '../NewBookingComponents/LoadingItemCard';
-import { Booking } from '@/interface/interface';
+import { Booking, GroupbyBooking } from '@/interface/interface';
 import BookingCard from './BookingCard';
+import ModalTemplate from '../templates/ModalTemplate';
+
+export function formatDate(date: Date) {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // January is 0
+  const day = date.getDate();
+
+  const formattedDate = `${year}/${month}/${day}`;
+  return formattedDate;
+}
+
 export default function ExistingBookingPage() {
-  const [existingBooking, setExistingBooking] = useState<Booking[]>([]);
+  const [existingBooking, setExistingBooking] = useState<GroupbyBooking[]>([]);
   const [loading, setLoading] = useState(false);
   const { customer } = useCustomerData();
+  const [openModal, setOpenModal] = useState(false);
+  const [bookingDetail, setBookingDetail] = useState<Booking | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -27,9 +42,27 @@ export default function ExistingBookingPage() {
         const httpMethod = 'GET';
         const response = await sendAPICall({ url, httpMethod });
         if (isMounted && response) {
-          console.log(response);
+          const bookings = response
+            .map((booking: any) => ({
+              ...booking,
+              bookingDate: new Date(booking.bookingDate),
+              bookingCreateTime: new Date(booking.bookingCreateTime),
+              bookingUpdateTime: new Date(booking.bookingUpdateTime),
+            }))
+            .sort(
+              (a: Booking, b: Booking) =>
+                a.bookingDate.getTime() - b.bookingDate.getTime()
+            );
 
-          setExistingBooking(response);
+          const groupbyBookings = bookings.map((booking: any) => ({
+            bookingDate: formatDate(booking.bookingDate),
+            booking: {
+              ...booking,
+            },
+          }));
+
+          console.log(groupbyBookings);
+          setExistingBooking(groupbyBookings);
           setLoading(false);
         }
       }
@@ -52,26 +85,101 @@ export default function ExistingBookingPage() {
         {loading ? (
           <LoadingItemCard />
         ) : (
-          <Box
-            component='div'
-            sx={{
-              display: 'flex',
-              overflowX: 'scroll',
-              '&::-webkit-scrollbar': {
-                height: '8px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                borderRadius: '8px',
-                backgroundColor: 'rgba(0,0,0,0.3)',
-              },
-            }}
-            pb={2}
-            gap={2}
-          >
-            {existingBooking.map((booking, index) => (
-              <BookingCard key={booking.bookingId} booking={booking} />
-            ))}
-          </Box>
+          <>
+            <Box
+              component='div'
+              sx={{
+                display: 'flex',
+                overflowX: 'scroll',
+                '&::-webkit-scrollbar': {
+                  height: '8px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  borderRadius: '8px',
+                  backgroundColor: 'rgba(0,0,0,0.3)',
+                },
+              }}
+              pb={2}
+              gap={2}
+            >
+              <Stack direction={'column'}>
+                {Array.from(
+                  new Set(existingBooking.map((b) => b.bookingDate))
+                ).map((b) => (
+                  <>
+                    <Typography variant='h5' color='initial' mb={2}>
+                      {b}
+                    </Typography>
+                    <Stack direction={'row'} mb={3}>
+                      {existingBooking
+                        .filter((c) => c.bookingDate == b)
+                        .map((booking, index) => (
+                          <BookingCard
+                            key={booking.booking.bookingId}
+                            booking={booking.booking}
+                            setOpenModal={setOpenModal}
+                            setBookingDetail={setBookingDetail}
+                          />
+                        ))}
+                    </Stack>
+                  </>
+                ))}
+              </Stack>
+            </Box>
+            <ModalTemplate
+              showModal={openModal}
+              onClose={() => setOpenModal(false)}
+            >
+              <Stack direction={'column'}>
+                <Typography variant='h4' color='initial'>
+                  {bookingDetail?.itemName}
+                </Typography>
+                <Box
+                  mb={2}
+                  sx={{ width: '100%', position: 'relative', height: 400 }}
+                >
+                  <img
+                    src={bookingDetail?.itemImg}
+                    alt=''
+                    style={{
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: 400,
+                      padding: 8,
+                      borderRadius: 20,
+                      position: 'absolute',
+                      filter: 'blur(4px)',
+                      opacity: 0.8,
+                    }}
+                  />
+                  <img
+                    src={bookingDetail?.itemImg}
+                    alt=''
+                    style={{
+                      objectFit: 'contain',
+                      width: '100%',
+                      height: 400,
+                      padding: 8,
+                      borderRadius: 20,
+                      position: 'absolute',
+                    }}
+                  />
+                </Box>
+                <Box sx={{ height: 100 }}>
+                  <Typography variant='body1' color='initial'>
+                    {bookingDetail?.itemDescription}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Stack direction={'row'}>
+                    <Button variant='contained' color='error'>
+                      Cancel
+                    </Button>
+                  </Stack>
+                </Box>
+              </Stack>
+            </ModalTemplate>
+          </>
         )}
       </Box>
     </>

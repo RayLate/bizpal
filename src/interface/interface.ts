@@ -34,9 +34,9 @@ export interface Booking {
   bookingId: string;
   bizId: string;
   bookingStatus: string;
-  bookingDate: string;
-  bookingCreateTime: string;
-  bookingUpdateTime: string;
+  bookingDate: Date;
+  bookingCreateTime: Date;
+  bookingUpdateTime: Date;
   bookingAmount: number;
   itemId: string;
   totalAmount: number;
@@ -46,4 +46,9 @@ export interface Booking {
   itemDescription: string;
   itemRate: number;
   itemBookedCount: number;
+}
+
+export interface GroupbyBooking {
+  bookingDate: string;
+  booking: Booking;
 }
