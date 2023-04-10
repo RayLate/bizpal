@@ -12,6 +12,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import LoadingItemCard from '../NewBookingComponents/LoadingItemCard';
 import { Booking } from '@/interface/interface';
+import BookingCard from './BookingCard';
 export default function ExistingBookingPage() {
   const [existingBooking, setExistingBooking] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ export default function ExistingBookingPage() {
     };
 
     getBookings();
-    setLoading(false);
+
     return () => {
       isMounted = false;
       setLoading(false);
@@ -67,8 +68,8 @@ export default function ExistingBookingPage() {
             pb={2}
             gap={2}
           >
-            {existingBooking.map((item, index) => (
-              <div>{item.bizId}</div>
+            {existingBooking.map((booking, index) => (
+              <BookingCard key={booking.bookingId} booking={booking} />
             ))}
           </Box>
         )}

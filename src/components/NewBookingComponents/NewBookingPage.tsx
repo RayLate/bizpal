@@ -8,9 +8,11 @@ const NewBookingPage = () => {
   const [categories, setCategories] = useState<string[]>(['All']);
   const [category, setCategory] = useState<string>('All');
   const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
+    setLoading(true);
     const getItems = async () => {
       const url =
         'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items';
@@ -37,6 +39,7 @@ const NewBookingPage = () => {
         );
         setCategories(['All', ...Array.from(categories)]);
         setItems(items);
+        setLoading(false);
       }
     };
 
@@ -44,6 +47,7 @@ const NewBookingPage = () => {
 
     return () => {
       isMounted = false;
+      setLoading(false);
     };
   }, []);
 
@@ -53,8 +57,9 @@ const NewBookingPage = () => {
         category={category}
         setCategory={setCategory}
         categories={categories}
+        loading={loading}
       />
-      <Items items={items} selectedCategory={category} />
+      <Items items={items} selectedCategory={category} loading={loading} />
     </>
   );
 };

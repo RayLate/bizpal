@@ -33,14 +33,17 @@ export interface CustomerData {
 export interface Booking {
   bookingId: string;
   bizId: string;
-  attr: {
-    bookingStatus: string;
-    bookingDate: string;
-    bookingCreateTime: string;
-    bookingUpdateTime: string;
-    bookingAmount: number;
-  };
-  sk: string;
+  bookingStatus: string;
+  bookingDate: string;
+  bookingCreateTime: string;
+  bookingUpdateTime: string;
+  bookingAmount: number;
   itemId: string;
-  pk: string;
+  totalAmount: number;
+  itemName: string;
+  itemImg: string;
+  itemPrice: number;
+  itemDescription: string;
+  itemRate: number;
+  itemBookedCount: number;
 }

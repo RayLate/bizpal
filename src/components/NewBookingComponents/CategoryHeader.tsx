@@ -1,11 +1,12 @@
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Skeleton } from '@mui/material';
 
 interface CategoryHeaderProps {
   category: string;
   setCategory: (value: string) => void;
   categories: string[];
+  loading: boolean;
 }
 
 const CategoryButton = ({
@@ -49,6 +50,7 @@ const CategoryHeader = ({
   category: selected,
   categories,
   setCategory,
+  loading,
 }: CategoryHeaderProps) => {
   return (
     <>
@@ -56,19 +58,23 @@ const CategoryHeader = ({
         <Typography variant='h4' color='initial' fontWeight={'bold'} mb={3}>
           Market Place
         </Typography>
-        <Grid container columnSpacing={5} rowSpacing={2} maxWidth={1600}>
-          {categories.map((category) => {
-            return (
-              <Grid item key={category} md={3}>
-                <CategoryButton
-                  category={category}
-                  selected={selected === category}
-                  onClickHandler={() => setCategory(category)}
-                />
-              </Grid>
-            );
-          })}
-        </Grid>
+        {loading ? (
+          <Skeleton animation='wave' variant='rectangular' height={50} />
+        ) : (
+          <Grid container columnSpacing={5} rowSpacing={2} maxWidth={1600}>
+            {categories.map((category) => {
+              return (
+                <Grid item key={category} md={3}>
+                  <CategoryButton
+                    category={category}
+                    selected={selected === category}
+                    onClickHandler={() => setCategory(category)}
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
+        )}
       </Box>
     </>
   );

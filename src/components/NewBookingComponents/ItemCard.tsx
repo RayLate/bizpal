@@ -46,7 +46,6 @@ const ItemCard = ({ item }: {item:Item}) => {
         sx={{
           width: 300,
           marginRight: (theme) => theme.spacing(2),
-          // flexShrink: 0,
         }}
       >
         <CardActionArea
