@@ -14,8 +14,9 @@ import {
 import React, { useState, useEffect } from 'react';
 import LoadingItemCard from '../NewBookingComponents/LoadingItemCard';
 import { Booking, GroupbyBooking } from '@/interface/interface';
-import BookingCard from './BookingCard';
 import ModalTemplate from '../templates/ModalTemplate';
+import BookingCard from '../ExistingBookingComponents/BookingCard';
+import NextLink from 'next/link';
 
 export function formatDate(date: Date) {
   const year = date.getFullYear();
@@ -26,7 +27,7 @@ export function formatDate(date: Date) {
   return formattedDate;
 }
 
-export default function ExistingBookingPage() {
+export default function PastBookingPage() {
   const [existingBooking, setExistingBooking] = useState<GroupbyBooking[]>([]);
   const [loading, setLoading] = useState(false);
   const { customer } = useCustomerData();
@@ -49,7 +50,7 @@ export default function ExistingBookingPage() {
               bookingCreateTime: new Date(booking.bookingCreateTime),
               bookingUpdateTime: new Date(booking.bookingUpdateTime),
             }))
-            .filter((a: Booking) => a.bookingStatus === 'BOOKED')
+            .filter((a: Booking) => a.bookingStatus !== 'BOOKED')
             .sort(
               (a: Booking, b: Booking) =>
                 a.bookingDate.getTime() - b.bookingDate.getTime()
@@ -95,7 +96,7 @@ export default function ExistingBookingPage() {
     <>
       <Box>
         <Typography variant='h4' color='initial' fontWeight='bold' mb={3}>
-          Existing Booking
+          Past Booking
         </Typography>
         {loading ? (
           <LoadingItemCard />
@@ -192,11 +193,12 @@ export default function ExistingBookingPage() {
                     alignItems='center'
                   >
                     <Button
+                      LinkComponent={NextLink}
+                      href={`/marketplace/item?itemid=${bookingDetail?.itemId}`}
                       variant='contained'
-                      color='error'
-                      onClick={() => {}}
+                      color='success'
                     >
-                      Cancel Booking
+                      Booking Again
                     </Button>
                   </Stack>
                 </Box>

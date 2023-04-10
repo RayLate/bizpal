@@ -7,9 +7,6 @@ import {
   Typography,
 } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
-import { useState } from 'react';
-import { createPortal } from 'react-dom';
-import ModalTemplate from '../templates/ModalTemplate';
 
 interface BookingCardProps {
   booking: Booking;
@@ -59,7 +56,23 @@ export default function BookingCard({
                 {booking.bizId}
               </Typography>
               <Typography variant='body1' color='initial'>
-                <b>Booking Time:</b> {booking.bookingDate.toLocaleTimeString()}
+                Booking Time: <b> {booking.bookingDate.toLocaleTimeString()}</b>
+              </Typography>
+              <Typography variant='body1'>
+                Status:{' '}
+                <Typography
+                  variant='body1'
+                  component='span'
+                  color={
+                    booking.bookingStatus === 'EXPIRED' ||
+                    booking.bookingStatus === 'CANCELED'
+                      ? 'red'
+                      : 'green'
+                  }
+                  fontWeight={'bold'}
+                >
+                  {booking.bookingStatus}
+                </Typography>
               </Typography>
             </Stack>
           </CardContent>
