@@ -1,10 +1,11 @@
 import DashboardLayout from '@/components/DashboardComponents/DashboardLayout';
+import BusinessRegistrationPage from '@/components/RegistrationComponents/BusinessRegistrationPage';
 
 const Business = () => {
   return (
     <>
       <DashboardLayout>
-        <div></div>
+        <BusinessRegistrationPage />
       </DashboardLayout>
     </>
   );
