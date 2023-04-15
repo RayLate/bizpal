@@ -136,7 +136,7 @@ export default function ExistingBookingPage() {
                 {Array.from(
                   new Set(existingBooking.map((b) => b.bookingDate))
                 ).map((b) => (
-                  <>
+                  <Box key={b}>
                     <Typography variant='h5' color='initial' mb={2}>
                       {b}
                     </Typography>
@@ -152,7 +152,7 @@ export default function ExistingBookingPage() {
                           />
                         ))}
                     </Stack>
-                  </>
+                  </Box>
                 ))}
               </Stack>
             </Box>

@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import { red } from '@mui/material/colors';
 import BookingBanner from './BookingBanner';
-import { BookingDataProvider } from '@/context/BookingContext';
 import { Item } from '@/interface/interface';
 
 const ItemDetail = ({ item }: { item: Item | undefined }) => {
@@ -121,9 +120,7 @@ const ItemDetail = ({ item }: { item: Item | undefined }) => {
             </Grid>
           </Grid>
           <Grid item sm={4} p={4}>
-            <BookingDataProvider>
-              <BookingBanner item={item} />
-            </BookingDataProvider>
+            <BookingBanner item={item} />
           </Grid>
         </Grid>
       </Box>

@@ -15,6 +15,9 @@ import * as Yup from 'yup';
 import { useCustomerData } from '@/context/CustomerContext';
 import { categories } from '@/static/categories';
 import { sendAPICall } from '@/context/api';
+import { createPortal } from 'react-dom';
+import { useState } from 'react';
+import AlertTemplate from '../templates/AlertTemplate';
 
 export interface NewServiceFormValues {
   cate: string;
@@ -57,7 +60,7 @@ const serviceSchema = Yup.object().shape({
 
 export default function AddServicePage() {
   const { customer, business } = useCustomerData();
-
+  const [showAlert, setShowAlert] = useState(false);
   const initialValues: NewServiceFormValues = {
     businessName: '',
     cate: categories[0],
@@ -89,13 +92,16 @@ export default function AddServicePage() {
           openingDay: values.openingDay.map((i) => parseInt(i)),
         };
         const { businessName, ...payload } = data;
+        console.log(payload);
+
         const response = await sendAPICall({ url, httpMethod, data: payload });
         console.log(response);
-        if(response.Status === 'SUCCESS') {
-         actions.setSubmitting(false) 
-         actions.resetForm();
+        if (response && response.Status === 'SUCCESS') {
+          actions.setSubmitting(false);
+          actions.resetForm();
+          setShowAlert(false);
+          setShowAlert(true);
         }
-        
       };
       createItem();
     },
@@ -105,6 +111,17 @@ export default function AddServicePage() {
   }
   return (
     <>
+      {showAlert
+        ? createPortal(
+            <AlertTemplate
+              showAlert={showAlert}
+              title='Item Successfully Published'
+              body='Congratulations, your Item has been successfully created!Go to Manage Service to view your listing in detail'
+              onClose={() => setShowAlert(false)}
+            />,
+            document.getElementById('alert-portal')!
+          )
+        : null}
       <Box mb={3}>
         <Stack direction='row' justifyContent={'space-between'} mb={1}>
           <Typography variant='h4' color='initial' fontWeight={'bold'}>

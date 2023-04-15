@@ -85,12 +85,12 @@ const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
   };
 
   function onClickHandler() {
-    changeDisplayTheme(displayTheme === 'user' ? 'seller' : 'user');
     if (displayTheme === 'user') {
       router.push(customer?.isSeller === 1 ? '/manageservice' : '/business');
     } else {
       router.push('/marketplace');
     }
+    changeDisplayTheme(displayTheme === 'user' ? 'seller' : 'user');
   }
 
   return (
