@@ -60,7 +60,7 @@ const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
       : customer?.isSeller
       ? [
           { label: 'Manage Service', href: '/manageservice' },
-          { label: 'Publish Service', href: '/addservice' },
+          { label: 'Add Service', href: '/addservice' },
         ]
       : [{ label: 'Registeration', href: '/business' }];
 

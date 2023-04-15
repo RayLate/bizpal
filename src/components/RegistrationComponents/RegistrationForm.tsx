@@ -13,7 +13,6 @@ import {
 import * as Yup from 'yup';
 import { useCustomerData } from '@/context/CustomerContext';
 import { sendAPICall } from '@/context/api';
-import { log } from 'console';
 import { useRouter } from 'next/router';
 
 interface RegistrationFormValues {
