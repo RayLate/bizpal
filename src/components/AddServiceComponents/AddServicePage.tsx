@@ -29,7 +29,7 @@ export interface NewServiceFormValues {
   openingHourEnd: number;
   serviceInterval: number;
   imageBase64: string;
-  businessName: string;
+  bizName: string;
   amount: number;
   itemBookedCount: number;
   itemPrice: number;
@@ -55,14 +55,14 @@ const serviceSchema = Yup.object().shape({
   ),
   serviceInterval: Yup.number().required('Service interval is required'),
   imageBase64: Yup.string().required('Upload a cover image for your service'),
-  businessName: Yup.string().required('Business name is required'),
+  bizName: Yup.string().required('Business name is required'),
 });
 
 export default function AddServicePage() {
   const { customer, business } = useCustomerData();
   const [showAlert, setShowAlert] = useState(false);
   const initialValues: NewServiceFormValues = {
-    businessName: '',
+    bizName: '',
     cate: categories[0],
     itemRate: 0,
     itemDescription: '',
@@ -86,12 +86,12 @@ export default function AddServicePage() {
         const httpMethod = 'POST';
         const data = {
           ...values,
-          bizId: business?.find((b) => b.businessName === values.businessName)
+          bizId: business?.find((b) => b.businessName === values.bizName)
             ?.bizId,
           userId: customer?.email,
           openingDay: values.openingDay.map((i) => parseInt(i)),
         };
-        const { businessName, ...payload } = data;
+        const { ...payload } = data;
         console.log(payload);
 
         const response = await sendAPICall({ url, httpMethod, data: payload });

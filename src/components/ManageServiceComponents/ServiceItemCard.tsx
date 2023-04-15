@@ -1,0 +1,88 @@
+import { ServiceItemRaw } from './ManageServicePage';
+import { Booking } from '@/interface/interface';
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Stack,
+  Typography,
+  Button,
+  Grid,
+} from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+interface ServiceItemProps {
+  serviceItem: ServiceItemRaw;
+}
+
+export default function ServiceItemCard({ serviceItem }: ServiceItemProps) {
+  return (
+    <>
+      <Card
+        sx={{
+          width: 300,
+          marginRight: (theme) => theme.spacing(2),
+        }}
+      >
+        <CardMedia
+          component={'img'}
+          alt=''
+          image={serviceItem.attr.itemImg}
+          height={150}
+        />
+        <CardContent>
+          <Stack direction={'column'} gap={1}>
+            <Typography
+              variant='h5'
+              color='initial'
+              component='div'
+              fontWeight={'bold'}
+              noWrap={true}
+            >
+              {serviceItem.attr.itemName}
+            </Typography>
+            <Stack
+              direction={'row'}
+              mb={1}
+              gap={1}
+              justifyContent={'space-evenly'}
+            >
+              <Typography variant='body1' color='initial'>
+                Rating: {serviceItem.attr.itemRate}
+              </Typography>
+              <Typography variant='body1' color='grey'>
+                |
+              </Typography>
+              <Typography variant='body1' color='initial'>
+                Booked: {serviceItem.attr.itemBookedCount}
+              </Typography>
+            </Stack>
+            <Grid container direction='row' spacing={1}>
+              <Grid item sm={6}>
+                <Button
+                  fullWidth
+                  variant='contained'
+                  color='secondary'
+                  startIcon={<EditIcon />}
+                >
+                  Manage
+                </Button>
+              </Grid>
+              <Grid item sm={6}>
+                <Button
+                  fullWidth
+                  variant='contained'
+                  color='error'
+                  startIcon={<DeleteIcon />}
+                >
+                  Disable
+                </Button>
+              </Grid>
+            </Grid>
+          </Stack>
+        </CardContent>
+      </Card>
+    </>
+  );
+}

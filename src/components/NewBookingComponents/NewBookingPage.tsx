@@ -18,6 +18,8 @@ const NewBookingPage = () => {
         'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items';
       const httpMethod = 'GET';
       const response = await sendAPICall({ url, httpMethod });
+      console.log(response[0]);
+
       if (response && response.length > 0 && isMounted) {
         const items: Item[] = response.map((itemObj: any) => ({
           itemId: itemObj.itemId,

@@ -57,9 +57,9 @@ export default function NewServiceForm({
             <InputLabel id='service-item-business'>Business</InputLabel>
             <Select
               labelId='service-item-business'
-              name='businessName'
-              value={formik.values.businessName}
-              label='Category'
+              name='bizName'
+              value={formik.values.bizName}
+              label='Business'
               onChange={formik.handleChange}
             >
               {businessDropDownOption.map((b) => (

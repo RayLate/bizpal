@@ -19,7 +19,6 @@ export default function BookingCard({
   setOpenModal,
   setBookingDetail,
 }: BookingCardProps) {
-
   function onClickHandler() {
     setOpenModal(true);
     setBookingDetail(booking);

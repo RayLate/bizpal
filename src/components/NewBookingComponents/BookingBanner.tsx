@@ -60,6 +60,7 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
 
         return response;
       };
+      console.log(newBooking);
 
       createBooking(newBooking).then((response) => {
         if (response) {
