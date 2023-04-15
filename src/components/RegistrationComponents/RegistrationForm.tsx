@@ -67,7 +67,6 @@ export default function RegistrationForm() {
     validationSchema: registrationSchema,
     onSubmit: (values, actions) => {
       console.log({ values, actions });
-      alert(JSON.stringify(values, null, 2));
       const createBiz = async () => {
         const url =
           'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/bizs';

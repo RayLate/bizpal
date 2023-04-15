@@ -18,6 +18,7 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import { NewServiceFormValues } from './AddServicePage';
+import { Business, useCustomerData } from '@/context/CustomerContext';
 
 const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -26,6 +27,12 @@ export default function NewServiceForm({
 }: {
   formik: FormikProps<NewServiceFormValues>;
 }) {
+  const { business } = useCustomerData();
+  if (!business) {
+    return <></>;
+  }
+  const businessDropDownOption = business!.map((b) => b.businessName);
+
   return (
     <>
       <Box>
@@ -34,14 +41,30 @@ export default function NewServiceForm({
             <InputLabel id='service-item-category'>Category</InputLabel>
             <Select
               labelId='service-item-category'
-              name='category'
-              value={formik.values.category}
+              name='cate'
+              value={formik.values.cate}
               label='Category'
               onChange={formik.handleChange}
             >
               {categories.map((category) => (
                 <MenuItem value={category} key={category}>
                   {category}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth sx={{ m: 1 }}>
+            <InputLabel id='service-item-business'>Business</InputLabel>
+            <Select
+              labelId='service-item-business'
+              name='businessName'
+              value={formik.values.businessName}
+              label='Category'
+              onChange={formik.handleChange}
+            >
+              {businessDropDownOption.map((b) => (
+                <MenuItem value={b} key={b}>
+                  {b}
                 </MenuItem>
               ))}
             </Select>
@@ -67,16 +90,16 @@ export default function NewServiceForm({
               <TextField
                 label='Item Price'
                 id='itemprice'
-                name='itemRate'
-                value={formik.values.itemRate}
+                name='itemPrice'
+                value={formik.values.itemPrice}
                 onChange={formik.handleChange}
                 error={
-                  formik.touched.itemRate && Boolean(formik.errors.itemRate)
+                  formik.touched.itemPrice && Boolean(formik.errors.itemPrice)
                 }
                 placeholder='Item Price'
                 fullWidth
                 sx={{ m: 1 }}
-                helperText={formik.touched.itemRate && formik.errors.itemRate}
+                helperText={formik.touched.itemPrice && formik.errors.itemPrice}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>$</InputAdornment>
@@ -100,18 +123,14 @@ export default function NewServiceForm({
                   key={day}
                   control={
                     <Checkbox
+                      checked={formik.values.openingDay.includes(`${day}`)}
                       onChange={(e: any) => {
-                        console.log(e.target.value);
                         const val = e.target.value;
-                        if (
-                          formik.values.openingDay.find(
-                            (i: number) => i === val
-                          )
-                        ) {
+                        if (formik.values.openingDay.includes(val)) {
                           formik.setFieldValue(
                             'openingDay',
                             formik.values.openingDay.filter(
-                              (i: number) => i !== val
+                              (i: string) => i !== val
                             )
                           );
                         } else {
@@ -160,15 +179,15 @@ export default function NewServiceForm({
               <FormControl
                 fullWidth
                 sx={{ m: 1 }}
-                error={Boolean(formik.errors.oepningHourEnd)}
+                error={Boolean(formik.errors.openingHourEnd)}
               >
                 <InputLabel id='service-item-closing-hour'>
                   Closing Hour
                 </InputLabel>
                 <Select
                   labelId='service-item-closing-hour'
-                  name='oepningHourEnd'
-                  value={formik.values.oepningHourEnd}
+                  name='openingHourEnd'
+                  value={formik.values.openingHourEnd}
                   label='Closing Hour'
                   onChange={formik.handleChange}
                 >

@@ -24,11 +24,8 @@ export default function ImageDragDrop({
 }: {
   formik: FormikProps<NewServiceFormValues>;
 }) {
-  const [file, setFile] = useState<UploadImage | null>(null);
   const handleChange = async (file: File) => {
-    console.log(file);
     const base64 = await toBase64(file);
-    setFile({ file: file, base64: base64 });
     formik.setFieldValue('imageBase64', base64, true);
   };
   return (
@@ -48,7 +45,7 @@ export default function ImageDragDrop({
         style={{ color: 'red' }}
       />
       <Box sx={{ width: '100%' }}>
-        {file ? (
+        {formik.values.imageBase64 ? (
           <>
             <Box my={2}>
               <Typography variant='body1' color='grey'>
@@ -56,7 +53,7 @@ export default function ImageDragDrop({
               </Typography>
             </Box>
             <Image
-              src={file.base64}
+              src={formik.values.imageBase64}
               loading='lazy'
               alt='uploaded image'
               width={350}
