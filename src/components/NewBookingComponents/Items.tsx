@@ -18,7 +18,9 @@ const Items = ({
   const allItems =
     selectedCategory === 'All'
       ? items
-      : items.filter((a) => a.category === selectedCategory);
+      : items.filter(
+          (a) => a.category.toLowerCase() === selectedCategory.toLowerCase()
+        );
   const topPicks = allItems
     .sort((a, b) => b.itemRate - a.itemRate)
     .slice(0, 10);

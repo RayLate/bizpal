@@ -38,7 +38,7 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
     if (customer) {
       const newBooking: NewBooking = {
         userId: customer.email,
-        itemId: '1074f212-56ab-4c71-b2b6-383305049917' ?? item.itemId,
+        itemId: item.itemId,
         bizId: item.bizId,
         amount: quantity,
         bookingDate:
@@ -72,6 +72,58 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
     }
   };
 
+  const filterWorkingDay = (date: Date) => {
+    const selectedDay = date.getDay();
+    const selectedHour = date.getHours();
+    const selectedDate = date.getDate();
+    const selectedMonth = date.getMonth();
+    const selectedYear = date.getFullYear();
+    const currentHour = new Date().getHours();
+    const currentDate = new Date().getDate();
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    if (
+      selectedDate === currentDate &&
+      selectedMonth === currentMonth &&
+      selectedYear === currentYear
+    ) {
+      return (
+        (item?.openingHourStart ?? 0) <= currentHour &&
+        currentHour <= (item?.openingHourEnd ?? 24)
+      );
+    } else {
+      return item ? item.openingDay.includes(selectedDay) : true;
+    }
+  };
+
+  const filterWorkingTime = (time: Date) => {
+    const selectedHour = new Date(time).getHours();
+    const selectedDate = new Date(time).getDate();
+    const selectedMonth = new Date(time).getMonth();
+    const selectedYear = new Date(time).getFullYear();
+    const currentHour = new Date().getHours();
+    const currentDate = new Date().getDate();
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+
+    if (
+      selectedDate === currentDate &&
+      selectedMonth === currentMonth &&
+      selectedYear === currentYear
+    ) {
+      // This is the same day
+      return (
+        (item?.openingHourStart ?? 0) <= selectedHour &&
+        selectedHour <= (item?.openingHourEnd ?? 24) &&
+        selectedHour > currentHour
+      );
+    } else {
+      return (
+        (item?.openingHourStart ?? 0) <= selectedHour &&
+        selectedHour <= (item?.openingHourEnd ?? 24)
+      );
+    }
+  };
   return (
     <>
       {showAlert
@@ -100,8 +152,10 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
               onChange={(date: Date) => setStartDate(date)}
               minDate={new Date()}
               inline
+              filterDate={filterWorkingDay}
               showTimeSelect
-              timeIntervals={60}
+              timeIntervals={item?.serviceInterval ?? 60}
+              filterTime={filterWorkingTime}
               timeFormat='HH:mm'
             />
           </Box>

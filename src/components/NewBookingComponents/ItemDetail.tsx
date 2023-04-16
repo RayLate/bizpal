@@ -52,7 +52,7 @@ const ItemDetail = ({ item }: { item: Item | undefined }) => {
                       {item?.category}
                     </Typography>
                     <Typography variant='body1' color='text.secondary'>
-                      Sold {item?.itemBookedCount}
+                      Item Booked {item?.itemBookedCount}
                     </Typography>
                   </Stack>
                   <Divider />
@@ -66,7 +66,7 @@ const ItemDetail = ({ item }: { item: Item | undefined }) => {
                         R
                       </Avatar>
                     }
-                    title={item?.bizId}
+                    title={item?.bizName}
                     subheader='Join Since 2016'
                   />
                   <CardContent>

@@ -11,6 +11,12 @@ export interface Item {
   itemBookedCount: number;
   itemUpdateTime: Date;
   itemCreateTime: Date;
+  serviceInterval: number;
+  openingHourStart: number;
+  openingHourEnd: number;
+  openingDay: number[];
+  isActive: boolean;
+  bizName: string;
 }
 
 export interface NewBooking {

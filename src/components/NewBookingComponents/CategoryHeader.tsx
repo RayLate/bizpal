@@ -59,7 +59,11 @@ const CategoryHeader = ({
           Market Place
         </Typography>
         {loading ? (
-          <Skeleton animation='wave' variant='rectangular' height={50} />
+          <>
+            <Skeleton animation='wave' variant='rectangular' height={50} />
+            <Box m={2} />
+            <Skeleton animation='wave' variant='rectangular' height={50} />
+          </>
         ) : (
           <Grid container columnSpacing={5} rowSpacing={2} maxWidth={1600}>
             {categories.map((category) => {

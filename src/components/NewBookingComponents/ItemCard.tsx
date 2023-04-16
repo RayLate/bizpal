@@ -107,7 +107,7 @@ const ItemCard = ({ item }: { item: Item }) => {
             >
               <SmallAvatar src={''} />
               <Typography variant='body2' color='text.secondary'>
-                {item.bizId}
+                {item.bizName}
               </Typography>
             </Stack>
             <Typography variant='caption' color='grey'>

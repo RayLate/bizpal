@@ -19,7 +19,6 @@ const ItemDetailPage = () => {
       const httpMethod = 'GET';
       const response = await sendAPICall({ url, httpMethod });
 
-      console.log(response);
       if (response) {
         const item: Item = {
           itemId: response[0].itemId,
@@ -34,9 +33,15 @@ const ItemDetailPage = () => {
           itemUpdateTime: new Date(response[0].attr.itemUpdateTime),
           totalAmount: response[0].attr.totalAmount,
           bizId: response[0].bizId,
+          serviceInterval: response[0].attr.serviceInterval,
+          openingHourStart: response[0].attr.openingHourStart,
+          openingHourEnd: response[0].attr.openingHourEnd,
+          openingDay: response[0].attr.openingDay,
+          isActive: response[0].attr.isActive,
+          bizName: response[0].attr.bizName,
         };
-        console.log(item);
         setItem(item);
+        console.log(response);
       }
     };
     getItem();

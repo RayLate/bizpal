@@ -18,7 +18,6 @@ const NewBookingPage = () => {
         'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items';
       const httpMethod = 'GET';
       const response = await sendAPICall({ url, httpMethod });
-      console.log(response[0]);
 
       if (response && response.length > 0 && isMounted) {
         const items: Item[] = response.map((itemObj: any) => ({
@@ -34,6 +33,12 @@ const NewBookingPage = () => {
           itemUpdateTime: new Date(itemObj.attr.itemUpdateTime),
           totalAmount: itemObj.attr.totalAmount,
           bizId: itemObj.bizId,
+          serviceInterval: itemObj.attr.serviceInterval,
+          openingHourStart: itemObj.attr.openingHourStart,
+          openingHourEnd: itemObj.attr.openingHourEnd,
+          openingDay: itemObj.attr.openingDay,
+          isActive: itemObj.attr.isActive,
+          bizName: itemObj.attr.bizName,
         }));
         const categories = new Set(
           items.map((item) => item.category.toLowerCase())
