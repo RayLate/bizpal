@@ -80,11 +80,12 @@ export default function ServiceItemDetail({
       }
     },
   });
-
   const handleChange = async (file: File) => {
     const base64 = await toBase64(file);
     formik.setFieldValue('imageBase64', base64, true);
   };
+
+  if (!customer) return <></>;
 
   return (
     <>
