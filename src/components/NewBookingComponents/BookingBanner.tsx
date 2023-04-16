@@ -57,6 +57,7 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
           httpMethod,
           data: newBooking,
         });
+        console.log(newBooking);
 
         return response;
       };

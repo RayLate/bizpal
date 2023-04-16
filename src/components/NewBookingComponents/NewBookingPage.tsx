@@ -48,7 +48,6 @@ const NewBookingPage = () => {
         setLoading(false);
       } else {
         setLoading(false);
-        setItems([]);
       }
     };
 

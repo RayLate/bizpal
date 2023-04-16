@@ -23,7 +23,7 @@ const ItemDetail = ({ item }: { item: Item | undefined }) => {
         <Grid container>
           <Grid item sm={8}>
             <Grid container direction='row' gap={3}>
-              <Grid item sx={{ flexGrow: 1 }}>
+              <Grid item sm={8}>
                 <Box>
                   <Typography variant='h4' mb={2} color='text.secondary'>
                     {item?.itemName}

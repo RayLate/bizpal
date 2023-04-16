@@ -72,13 +72,14 @@ export default function RegistrationForm() {
         const httpMethod = 'POST';
 
         const { termCondition: _, ...data } = values;
+        console.log({ ...data, userId: customer?.email });
         const response = await sendAPICall({
           url,
           httpMethod,
           data: { ...data, userId: customer?.email },
         });
 
-        if (response.Status === 'SUCCESS') {
+        if (response && response.Status === 'SUCCESS') {
           setRefresh((prev) => prev + 1);
           console.log(response);
           actions.setSubmitting(false);
