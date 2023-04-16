@@ -15,9 +15,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Link from 'next/link';
 interface ServiceItemProps {
   serviceItem: ServiceItemRaw;
+  setOpenModal: (b: boolean) => void;
+  setServiceItemDetails: (s: ServiceItemRaw) => void;
 }
 
-export default function ServiceItemCard({ serviceItem }: ServiceItemProps) {
+export default function ServiceItemCard({
+  serviceItem,
+  setOpenModal,
+  setServiceItemDetails,
+}: ServiceItemProps) {
   return (
     <>
       <Card
@@ -25,6 +31,7 @@ export default function ServiceItemCard({ serviceItem }: ServiceItemProps) {
           width: 300,
           marginRight: (theme) => theme.spacing(2),
         }}
+        
       >
         <CardMedia
           component={'img'}
@@ -64,7 +71,7 @@ export default function ServiceItemCard({ serviceItem }: ServiceItemProps) {
                 <Button
                   fullWidth
                   variant='contained'
-                  color='secondary'
+                  color='primary'
                   startIcon={<EditIcon />}
                   LinkComponent={Link}
                   href={`http://localhost:3000/manageservice/item?itemid=${serviceItem.itemId}`}
@@ -76,10 +83,14 @@ export default function ServiceItemCard({ serviceItem }: ServiceItemProps) {
                 <Button
                   fullWidth
                   variant='contained'
-                  color='error'
                   startIcon={<DeleteIcon />}
+                  sx={{ backgroundColor: 'grey' }}
+                  onClick={() => {
+                    setOpenModal(true);
+                    setServiceItemDetails(serviceItem);
+                  }}
                 >
-                  Disable
+                  Delete
                 </Button>
               </Grid>
             </Grid>

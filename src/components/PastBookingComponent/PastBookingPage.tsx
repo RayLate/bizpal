@@ -76,21 +76,7 @@ export default function PastBookingPage() {
       isMounted = false;
       setLoading(false);
     };
-  }, []);
-
-  const cancelBookings = async () => {
-    if (bookingDetail) {
-      const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/bookings/${bookingDetail.bookingId}`;
-      const httpMethod = 'PUT';
-      const data = { ...bookingDetail, bookingStatus: 'CANCELED' };
-      const response = await sendAPICall({ url, httpMethod, data });
-      if (response) {
-        console.log(response);
-        setOpenModal(false);
-        setBookingDetail(null);
-      }
-    }
-  };
+  }, [customer]);
 
   return (
     <>
@@ -102,46 +88,52 @@ export default function PastBookingPage() {
           <LoadingItemCard />
         ) : (
           <>
-            <Box
-              component='div'
-              sx={{
-                display: 'flex',
-                overflowX: 'scroll',
-                '&::-webkit-scrollbar': {
-                  height: '8px',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  borderRadius: '8px',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                },
-              }}
-              pb={2}
-              gap={2}
-            >
-              <Stack direction={'column'}>
-                {Array.from(
-                  new Set(existingBooking.map((b) => b.bookingDate))
-                ).map((b) => (
-                  <>
-                    <Typography variant='h5' color='initial' mb={2}>
-                      {b}
-                    </Typography>
-                    <Stack direction={'row'} mb={3}>
-                      {existingBooking
-                        .filter((c) => c.bookingDate == b)
-                        .map((booking, index) => (
-                          <BookingCard
-                            key={booking.booking.bookingId}
-                            booking={booking.booking}
-                            setOpenModal={setOpenModal}
-                            setBookingDetail={setBookingDetail}
-                          />
-                        ))}
-                    </Stack>
-                  </>
-                ))}
-              </Stack>
-            </Box>
+            {existingBooking && existingBooking.length > 0 ? (
+              <Box
+                component='div'
+                sx={{
+                  display: 'flex',
+                  overflowX: 'scroll',
+                  '&::-webkit-scrollbar': {
+                    height: '8px',
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    borderRadius: '8px',
+                    backgroundColor: 'rgba(0,0,0,0.3)',
+                  },
+                }}
+                pb={2}
+                gap={2}
+              >
+                <Stack direction={'column'}>
+                  {Array.from(
+                    new Set(existingBooking.map((b) => b.bookingDate))
+                  ).map((b) => (
+                    <Box key={b}>
+                      <Typography variant='h5' color='initial' mb={2}>
+                        {b}
+                      </Typography>
+                      <Stack direction={'row'} mb={3}>
+                        {existingBooking
+                          .filter((c) => c.bookingDate == b)
+                          .map((booking, index) => (
+                            <BookingCard
+                              key={booking.booking.bookingId}
+                              booking={booking.booking}
+                              setOpenModal={setOpenModal}
+                              setBookingDetail={setBookingDetail}
+                            />
+                          ))}
+                      </Stack>
+                    </Box>
+                  ))}
+                </Stack>
+              </Box>
+            ) : (
+              <Typography variant='body1' color='initial'>
+                You have no past booking
+              </Typography>
+            )}
             <ModalTemplate
               showModal={openModal}
               onClose={() => setOpenModal(false)}

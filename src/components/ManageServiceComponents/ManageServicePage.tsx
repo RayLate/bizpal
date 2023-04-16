@@ -2,8 +2,9 @@ import { useCustomerData } from '@/context/CustomerContext';
 import { sendAPICall } from '@/context/api';
 import React, { useState, useEffect } from 'react';
 import LoadingItemCard from '../NewBookingComponents/LoadingItemCard';
-import { Box, Divider, Grid, Stack, Typography } from '@mui/material';
+import { Box, Divider, Grid, Stack, Typography, Button } from '@mui/material';
 import ServiceItemCard from './ServiceItemCard';
+import ModalTemplate from '../templates/ModalTemplate';
 
 export interface ServiceItemRaw {
   attr: {
@@ -22,6 +23,7 @@ export interface ServiceItemRaw {
     itemBookedCount: number;
     itemRate: number;
     bizName: string;
+    isActive: boolean;
   };
   sk: string;
   itemId: string;
@@ -32,7 +34,12 @@ export interface ServiceItemRaw {
 export default function ManageServicePage() {
   const [loading, setLoading] = useState(false);
   const [myItems, setMyItems] = useState<ServiceItemRaw[]>();
-  const { customer, business } = useCustomerData();
+  const [openModal, setOpenModal] = useState(false);
+  const [serviceItemDetails, setServiceItemDetails] =
+    useState<ServiceItemRaw | null>(null);
+  const { customer } = useCustomerData();
+  const [refresh, setRefresh] = useState(0);
+
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
@@ -41,7 +48,6 @@ export default function ManageServicePage() {
         const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items?userId=${customer.email}`;
         const httpMethod = 'GET';
         const response = await sendAPICall({ url, httpMethod });
-        console.log(response);
         if (response && response.length > 0 && isMounted) {
           setMyItems(response);
           setLoading(false);
@@ -56,7 +62,21 @@ export default function ManageServicePage() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [refresh, customer]);
+
+  const deleteItem = async () => {
+    const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items/${serviceItemDetails?.itemId}`;
+    const httpMethod = 'POST';
+    const data = { isActive: false };
+    const response = await sendAPICall({ url, httpMethod, data });
+
+    console.log(response);
+    if (response) {
+      setOpenModal(false);
+      setRefresh((prev) => prev + 1);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -78,29 +98,60 @@ export default function ManageServicePage() {
             }}
             pb={2}
             gap={2}
+            width='100%'
           >
-            <Stack direction='column'>
+            <Stack direction='column' width='100%'>
               {Array.from(
                 new Set(myItems?.map((item) => item.attr.bizName))
-              ).map((bizName) => (
-                <Box key={bizName}>
-                  <Divider sx={{ marginBottom: 2 }} />
-                  <Typography variant='h5' color='initial' mb={2}>
-                    {bizName}
-                  </Typography>
-                  <Grid container direction='row' mb={3} rowSpacing={2}>
-                    {myItems
-                      ?.filter((i) => i.attr.bizName === bizName)
-                      .map((serviceItem) => (
-                        <Grid item key={serviceItem.itemId}>
-                          <ServiceItemCard serviceItem={serviceItem} />
-                        </Grid>
-                      ))}
-                  </Grid>
-                </Box>
-              ))}
+              ).map((bizName) =>
+                myItems &&
+                myItems.filter(
+                  (i) => i.attr.bizName === bizName && i.attr.isActive
+                ).length > 0 ? (
+                  <Box key={bizName} width='100%'>
+                    <Divider sx={{ marginBottom: 2 }} />
+                    <Typography
+                      variant='h5'
+                      color='initial'
+                      mb={2}
+                      fontWeight='bold'
+                    >
+                      {bizName}
+                    </Typography>
+                    <Grid container direction='row' mb={3} rowSpacing={2}>
+                      {myItems
+                        ?.filter(
+                          (i) => i.attr.bizName === bizName && i.attr.isActive
+                        )
+                        .map((serviceItem) => (
+                          <Grid item key={serviceItem.itemId}>
+                            <ServiceItemCard
+                              serviceItem={serviceItem}
+                              setOpenModal={setOpenModal}
+                              setServiceItemDetails={setServiceItemDetails}
+                            />
+                          </Grid>
+                        ))}
+                    </Grid>
+                  </Box>
+                ) : null
+              )}
             </Stack>
           </Box>
+          <ModalTemplate
+            showModal={openModal}
+            onClose={() => setOpenModal(false)}
+          >
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant='h5' color='initial' sx={{ mb: 2 }}>
+                Do you want to delete this service item -{' '}
+                <b>{serviceItemDetails?.attr.itemName}</b>
+              </Typography>
+              <Button variant='contained' color='error' onClick={deleteItem}>
+                Confirm Delete
+              </Button>
+            </Box>
+          </ModalTemplate>
         </>
       )}
     </>

@@ -63,8 +63,8 @@ export default function ServiceItemDetail({
       console.log(values);
       if (customer) {
         const updateServiceItem = async () => {
-          const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/item/${serviceItem.itemId}`;
-          const httpMethod = 'PUT';
+          const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items/${serviceItem.itemId}`;
+          const httpMethod = 'POST';
           const data = {
             userId: customer.email,
             itemId: serviceItem.itemId,

@@ -89,7 +89,8 @@ const BookingBanner = ({ item }: { item: Item | undefined }) => {
     ) {
       return (
         (item?.openingHourStart ?? 0) <= currentHour &&
-        currentHour <= (item?.openingHourEnd ?? 24)
+        currentHour <= (item?.openingHourEnd ?? 24) &&
+        Boolean(item?.openingDay.includes(selectedDay))
       );
     } else {
       return item ? item.openingDay.includes(selectedDay) : true;

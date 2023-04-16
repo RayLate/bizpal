@@ -60,7 +60,7 @@ const ItemCard = ({ item }: { item: Item }) => {
                 ? item.itemImg
                 : `https://source.unsplash.com/random/300x150/?${item.category.toLowerCase()}`
             }
-            sx={{ height: 150, width: 300 }}
+            sx={isLoading ? {} : { height: 150, width: 300 }}
           />
           {isLoading && (
             <Skeleton

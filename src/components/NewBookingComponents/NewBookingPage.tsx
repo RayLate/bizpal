@@ -44,7 +44,7 @@ const NewBookingPage = () => {
           items.map((item) => item.category.toLowerCase())
         );
         setCategories(['All', ...Array.from(categories)]);
-        setItems(items);
+        setItems(items.filter((i) => i.isActive));
         setLoading(false);
       }
     };

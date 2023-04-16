@@ -63,6 +63,7 @@ export default function BookingCard({
                   component='span'
                   color={
                     booking.bookingStatus === 'EXPIRED' ||
+                    booking.bookingStatus === 'CANCELLED' ||
                     booking.bookingStatus === 'CANCELED'
                       ? 'red'
                       : 'green'
