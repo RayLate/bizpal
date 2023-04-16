@@ -15,9 +15,11 @@ import { signOut } from 'next-auth/react';
 import VerticalNav from './VerticalNav';
 import LoadingAnimation from '../templates/LoadingPage';
 import { useCustomerData } from '@/context/CustomerContext';
+import { useThemeToggle } from '@/context/ThemeContext';
 
 const SignOutButton = () => {
   const { customer, setSessionCustomer, clearCustomer } = useCustomerData();
+  const { changeDisplayTheme } = useThemeToggle();
   return (
     <Button
       color='inherit'
@@ -26,6 +28,7 @@ const SignOutButton = () => {
         setSessionCustomer(null);
         clearCustomer();
         e.preventDefault();
+        changeDisplayTheme('user');
         signOut({ callbackUrl: '/' });
       }}
     >

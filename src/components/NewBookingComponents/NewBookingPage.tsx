@@ -46,6 +46,9 @@ const NewBookingPage = () => {
         setCategories(['All', ...Array.from(categories)]);
         setItems(items.filter((i) => i.isActive));
         setLoading(false);
+      } else {
+        setLoading(false);
+        setItems([]);
       }
     };
 

@@ -60,7 +60,6 @@ export default function ServiceItemDetail({
     initialValues: initialValues,
     validationSchema: serviceSchema,
     onSubmit: (values, actions) => {
-      console.log(values);
       if (customer) {
         const updateServiceItem = async () => {
           const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items/${serviceItem.itemId}`;
@@ -71,7 +70,6 @@ export default function ServiceItemDetail({
             ...values,
           };
           const response = await sendAPICall({ url, httpMethod, data });
-          console.log(response);
           if (response) {
             actions.setSubmitting(false);
             router.push('/manageservice');

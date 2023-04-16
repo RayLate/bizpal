@@ -51,7 +51,7 @@ const registrationSchema = Yup.object().shape({
 
 export default function RegistrationForm() {
   const router = useRouter();
-  const { customer, setCustomer } = useCustomerData();
+  const { customer, setCustomer, setRefresh } = useCustomerData();
   const initialValues: RegistrationFormValues = {
     businessName: '',
     businessEmail: '',
@@ -66,14 +66,12 @@ export default function RegistrationForm() {
     initialValues: initialValues,
     validationSchema: registrationSchema,
     onSubmit: (values, actions) => {
-      console.log({ values, actions });
       const createBiz = async () => {
         const url =
           'https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/bizs';
         const httpMethod = 'POST';
 
         const { termCondition: _, ...data } = values;
-        console.log({ ...data, userId: customer?.email });
         const response = await sendAPICall({
           url,
           httpMethod,
@@ -81,6 +79,7 @@ export default function RegistrationForm() {
         });
 
         if (response.Status === 'SUCCESS') {
+          setRefresh((prev) => prev + 1);
           console.log(response);
           actions.setSubmitting(false);
           actions.resetForm();

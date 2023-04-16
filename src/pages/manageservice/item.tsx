@@ -1,6 +1,7 @@
 import DashboardLayout from '@/components/DashboardComponents/DashboardLayout';
 import { ServiceItemRaw } from '@/components/ManageServiceComponents/ManageServicePage';
 import ServiceItemDetail from '@/components/ManageServiceComponents/ServiceItemDetail';
+import { useThemeToggle } from '@/context/ThemeContext';
 import { sendAPICall } from '@/context/api';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -9,6 +10,8 @@ export default function EditServicePage() {
   const router = useRouter();
   const { itemid } = router.query;
   const [serviceItem, setServiceItem] = useState<ServiceItemRaw>();
+    const { changeDisplayTheme } = useThemeToggle();
+    useEffect(() => changeDisplayTheme('seller'), []);
 
   useEffect(() => {
     let isMounted = true;

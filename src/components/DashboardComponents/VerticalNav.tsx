@@ -57,14 +57,18 @@ const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
           { label: 'Existing Booking', href: '/existingbooking' },
           { label: 'Past Booking', href: '/history' },
         ]
-      : customer?.isSeller
-      ? [
+      : [
           { label: 'Manage Service', href: '/manageservice' },
           { label: 'Add Service', href: '/addservice' },
-        ]
-      : [{ label: 'Registeration', href: '/business' }];
+        ];
 
-  const bottomLinks = [{ label: 'About Us', href: '/aboutus' }];
+  const bottomLinks =
+    displayTheme === 'user'
+      ? [{ label: 'About Us', href: '/aboutus' }]
+      : [
+          { label: 'New Business', href: '/business' },
+          { label: 'About Us', href: '/aboutus' },
+        ];
 
   const ListItemButtonWithRoute = ({
     link,
@@ -86,7 +90,7 @@ const VerticalNav: React.FC<VerticalNavProps> = ({ user, drawerWidth }) => {
 
   function onClickHandler() {
     if (displayTheme === 'user') {
-      router.push(customer?.isSeller === 1 ? '/manageservice' : '/business');
+      router.push('/manageservice');
     } else {
       router.push('/marketplace');
     }

@@ -66,7 +66,6 @@ export default function ExistingBookingPage() {
             },
           }));
 
-          console.log(groupbyBookings);
           setExistingBooking(groupbyBookings);
           setLoading(false);
         }
@@ -88,7 +87,6 @@ export default function ExistingBookingPage() {
       const data = { bookingStatus: 'CANCELLED' };
       const response = await sendAPICall({ url, httpMethod, data });
       if (response) {
-        console.log(response);
         setOpenModal(false);
         setBookingDetail(null);
         setShowAlert(true);

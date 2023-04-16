@@ -89,13 +89,12 @@ export default function AddServicePage() {
           bizId: business?.find((b) => b.businessName === values.bizName)
             ?.bizId,
           userId: customer?.email,
+          isActive: true,
           openingDay: values.openingDay.map((i) => parseInt(i)),
         };
         const { ...payload } = data;
-        console.log(payload);
 
         const response = await sendAPICall({ url, httpMethod, data: payload });
-        console.log(response);
         if (response && response.Status === 'SUCCESS') {
           actions.setSubmitting(false);
           actions.resetForm();

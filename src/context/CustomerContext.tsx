@@ -40,6 +40,7 @@ interface CustomerDataContextValue {
     React.SetStateAction<NewCustomerData | null>
   >;
   clearCustomer: () => void;
+  setRefresh: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const CustomerDataContext = createContext<CustomerDataContextValue>({
@@ -48,6 +49,7 @@ const CustomerDataContext = createContext<CustomerDataContextValue>({
   setCustomer: () => {},
   setSessionCustomer: () => {},
   clearCustomer: () => {},
+  setRefresh: () => {},
 });
 
 export const useCustomerData = () => useContext(CustomerDataContext);
@@ -59,6 +61,7 @@ export const CustomerDataProvider: React.FC<PropsWithChildren> = ({
   const [business, setBusiness] = useState<Business[] | null>(null);
   const [sessionCustomer, setSessionCustomer] =
     useState<NewCustomerData | null>(null);
+  const [refresh, setRefresh] = useState(0);
 
   function clearCustomer() {
     setBusiness(null);
@@ -68,7 +71,17 @@ export const CustomerDataProvider: React.FC<PropsWithChildren> = ({
   useEffect(() => {
     let isMounted = true;
     if (!sessionCustomer || !sessionCustomer.email) return;
-    const getCustomer = async () => {
+
+    const getCustomerFromLocalStorage = () => {
+      const customerJson = localStorage.getItem('customer');
+      if (customerJson) {
+        const customer: CustomerData = JSON.parse(customerJson);
+        setCustomer(customer);
+      }
+      // once we get customer info from localstorage, then we call the api to sync it
+    };
+
+    const getCustomerFromAPI = async () => {
       const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/users/${sessionCustomer.email}`;
       const httpMethod = 'GET'; // Replace with your desired HTTP method
       const response = await sendAPICall({ url, httpMethod });
@@ -95,19 +108,19 @@ export const CustomerDataProvider: React.FC<PropsWithChildren> = ({
       const response = await sendAPICall({ url, httpMethod });
 
       const biz = response.map((b: any) => ({ ...b.attr, bizId: b.bizId }));
-      console.log(biz);
       setBusiness(biz);
       return response;
     };
-    getCustomer()
+    getCustomerFromLocalStorage();
+    getCustomerFromAPI()
       .then((response) => {
-        console.log(response);
         if (response.isSeller === 1 && isMounted) {
           getBiz({ user: response.email });
         }
 
         if (response.email) {
           setCustomer(response);
+          localStorage.setItem('customer', JSON.stringify(response));
           return null;
         } else {
           return createCustomer();
@@ -115,15 +128,14 @@ export const CustomerDataProvider: React.FC<PropsWithChildren> = ({
       })
       .then((response) => {
         if (response && isMounted) {
-          console.log(response);
-
           setCustomer(response);
+          localStorage.setItem('customer', JSON.stringify(response));
         }
       });
     return () => {
       isMounted = false;
     };
-  }, [sessionCustomer]);
+  }, [sessionCustomer, refresh]);
 
   return (
     <CustomerDataContext.Provider
@@ -133,6 +145,7 @@ export const CustomerDataProvider: React.FC<PropsWithChildren> = ({
         setCustomer,
         clearCustomer,
         setSessionCustomer,
+        setRefresh,
       }}
     >
       {children}

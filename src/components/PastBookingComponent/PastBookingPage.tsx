@@ -63,7 +63,6 @@ export default function PastBookingPage() {
             },
           }));
 
-          console.log(groupbyBookings);
           setExistingBooking(groupbyBookings);
           setLoading(false);
         }

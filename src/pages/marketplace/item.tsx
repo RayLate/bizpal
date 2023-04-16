@@ -5,14 +5,17 @@ import { useEffect, useState } from 'react';
 import ItemDetail from '@/components/NewBookingComponents/ItemDetail';
 import { sendAPICall } from '@/context/api';
 import { Item } from '@/interface/interface';
+import { useThemeToggle } from '@/context/ThemeContext';
 
 const ItemDetailPage = () => {
+  const { changeDisplayTheme } = useThemeToggle();
   const router = useRouter();
   const { itemid } = router.query;
   const [item, setItem] = useState<Item>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    changeDisplayTheme('user');
     if (!itemid) return;
     const getItem = async () => {
       const url = `https://7beqwqk0rk.execute-api.us-east-1.amazonaws.com/prod/items/${itemid}`;
