@@ -21,6 +21,7 @@ export interface ServiceItemRaw {
     category: string;
     itemBookedCount: number;
     itemRate: number;
+    bizName: string;
   };
   sk: string;
   itemId: string;
@@ -53,7 +54,7 @@ export default function ManageServicePage() {
     getServiceItems();
 
     return () => {
-      let isMounted = false;
+      isMounted = false;
     };
   }, []);
   return (
@@ -79,25 +80,25 @@ export default function ManageServicePage() {
             gap={2}
           >
             <Stack direction='column'>
-              {Array.from(new Set(myItems?.map((item) => item.bizId))).map(
-                (biz) => (
-                  <Box key={biz}>
-                    <Divider sx={{ marginBottom: 2 }} />
-                    <Typography variant='h5' color='initial' mb={2}>
-                      {biz}
-                    </Typography>
-                    <Grid container direction='row' mb={3} rowSpacing={2}>
-                      {myItems
-                        ?.filter((i) => i.bizId === biz)
-                        .map((serviceItem) => (
-                          <Grid item key={serviceItem.itemId}>
-                            <ServiceItemCard serviceItem={serviceItem} />
-                          </Grid>
-                        ))}
-                    </Grid>
-                  </Box>
-                )
-              )}
+              {Array.from(
+                new Set(myItems?.map((item) => item.attr.bizName))
+              ).map((bizName) => (
+                <Box key={bizName}>
+                  <Divider sx={{ marginBottom: 2 }} />
+                  <Typography variant='h5' color='initial' mb={2}>
+                    {bizName}
+                  </Typography>
+                  <Grid container direction='row' mb={3} rowSpacing={2}>
+                    {myItems
+                      ?.filter((i) => i.attr.bizName === bizName)
+                      .map((serviceItem) => (
+                        <Grid item key={serviceItem.itemId}>
+                          <ServiceItemCard serviceItem={serviceItem} />
+                        </Grid>
+                      ))}
+                  </Grid>
+                </Box>
+              ))}
             </Stack>
           </Box>
         </>

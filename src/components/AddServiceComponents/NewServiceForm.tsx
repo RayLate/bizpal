@@ -24,8 +24,10 @@ const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export default function NewServiceForm({
   formik,
+  submitButton,
 }: {
   formik: FormikProps<NewServiceFormValues>;
+  submitButton: JSX.Element;
 }) {
   const { business } = useCustomerData();
   if (!business) {
@@ -37,7 +39,7 @@ export default function NewServiceForm({
     <>
       <Box>
         <form onSubmit={formik.handleSubmit}>
-          <FormControl fullWidth sx={{ m: 1 }}>
+          <FormControl fullWidth sx={{ my: 1 }}>
             <InputLabel id='service-item-category'>Category</InputLabel>
             <Select
               labelId='service-item-category'
@@ -53,7 +55,7 @@ export default function NewServiceForm({
               ))}
             </Select>
           </FormControl>
-          <FormControl fullWidth sx={{ m: 1 }}>
+          <FormControl fullWidth sx={{ my: 1 }}>
             <InputLabel id='service-item-business'>Business</InputLabel>
             <Select
               labelId='service-item-business'
@@ -82,7 +84,7 @@ export default function NewServiceForm({
                 }
                 placeholder='Item Name'
                 fullWidth
-                sx={{ m: 1 }}
+                sx={{ my: 1 }}
                 helperText={formik.touched.itemName && formik.errors.itemName}
               />
             </Grid>
@@ -98,7 +100,7 @@ export default function NewServiceForm({
                 }
                 placeholder='Item Price'
                 fullWidth
-                sx={{ m: 1 }}
+                sx={{ my: 1 }}
                 helperText={formik.touched.itemPrice && formik.errors.itemPrice}
                 InputProps={{
                   startAdornment: (
@@ -113,7 +115,7 @@ export default function NewServiceForm({
             required
             error={Boolean(formik.errors.openingDay)}
             component='fieldset'
-            sx={{ m: 1 }}
+            sx={{ my: 1 }}
             variant='standard'
           >
             <FormLabel component='legend'>Service Available On</FormLabel>
@@ -154,7 +156,7 @@ export default function NewServiceForm({
             <Grid item sm={4}>
               <FormControl
                 fullWidth
-                sx={{ m: 1 }}
+                sx={{ my: 1 }}
                 error={Boolean(formik.errors.openingHourStart)}
               >
                 <InputLabel id='service-item-opening-hour'>
@@ -178,7 +180,7 @@ export default function NewServiceForm({
             <Grid item sm={4}>
               <FormControl
                 fullWidth
-                sx={{ m: 1 }}
+                sx={{ my: 1 }}
                 error={Boolean(formik.errors.openingHourEnd)}
               >
                 <InputLabel id='service-item-closing-hour'>
@@ -200,7 +202,7 @@ export default function NewServiceForm({
               </FormControl>
             </Grid>
             <Grid item sm={4}>
-              <FormControl fullWidth sx={{ m: 1 }}>
+              <FormControl fullWidth sx={{ my: 1 }}>
                 <InputLabel id='service-item-interval'>
                   Service Interval in Min
                 </InputLabel>
@@ -234,16 +236,12 @@ export default function NewServiceForm({
             fullWidth
             multiline
             minRows={3}
-            sx={{ m: 1 }}
+            sx={{ my: 1 }}
             helperText={
               formik.touched.itemDescription && formik.errors.itemDescription
             }
           />
-          <Box m={1}>
-            <Button variant='contained' color='secondary' type='submit'>
-              List Now
-            </Button>
-          </Box>
+          <Box sx={{ my: 1 }}>{submitButton}</Box>
         </form>
       </Box>
     </>

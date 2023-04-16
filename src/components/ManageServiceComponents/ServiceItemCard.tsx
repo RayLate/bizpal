@@ -12,6 +12,7 @@ import {
 import CardMedia from '@mui/material/CardMedia';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Link from 'next/link';
 interface ServiceItemProps {
   serviceItem: ServiceItemRaw;
 }
@@ -65,6 +66,8 @@ export default function ServiceItemCard({ serviceItem }: ServiceItemProps) {
                   variant='contained'
                   color='secondary'
                   startIcon={<EditIcon />}
+                  LinkComponent={Link}
+                  href={`http://localhost:3000/manageservice/item?itemid=${serviceItem.itemId}`}
                 >
                   Manage
                 </Button>

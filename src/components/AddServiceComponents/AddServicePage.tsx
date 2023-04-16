@@ -35,7 +35,7 @@ export interface NewServiceFormValues {
   itemPrice: number;
 }
 
-const serviceSchema = Yup.object().shape({
+export const serviceSchema = Yup.object().shape({
   cate: Yup.string().required('Category is required'),
   itemPrice: Yup.number().required('Price is required'),
   itemDescription: Yup.string()
@@ -143,7 +143,14 @@ export default function AddServicePage() {
         <Grid item sm={8} px={2}>
           <Card>
             <CardContent>
-              <NewServiceForm formik={formik} />
+              <NewServiceForm
+                formik={formik}
+                submitButton={
+                  <Button variant='contained' color='secondary' type='submit'>
+                    List Now
+                  </Button>
+                }
+              />
             </CardContent>
           </Card>
         </Grid>
